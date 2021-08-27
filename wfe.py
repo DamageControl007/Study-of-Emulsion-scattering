@@ -61,10 +61,11 @@ for g in [-0.1] :
     #if g<xxx : continue
     for Ut in urange :
         if g==xxx and Ut<yyy : continue
-        
+
         #observations
         photon=0
         path=0
+        normPath=0
         front=0
         back=0
         thru=0
@@ -72,9 +73,9 @@ for g in [-0.1] :
         hit=0
 
         dic=defaultdict(float)
-        
+
         for i in range(0,itr):
-            
+
             #parameters
             Us=Ut*0.95
             Ua=Ut-Us
@@ -92,7 +93,7 @@ for g in [-0.1] :
             x=random.uniform(-100,100)
             y=0
             z=0
-            
+
             xcor.append(x)
             zcor.append(z)
 
@@ -107,6 +108,7 @@ for g in [-0.1] :
             # if photon reaches the other boundary without any interaction
             if z>Lz:
                 path+=Lz
+                normPath+=Lz*w
                 thru+=1
                 front+=1
                 mass+=w
@@ -114,7 +116,7 @@ for g in [-0.1] :
                 z1=Lz
                 x1=x/z
                 y1=y/z
-                
+
                 xcor.append(x1)
                 zcor.append(Lz)
 
@@ -166,6 +168,7 @@ for g in [-0.1] :
             # if it undergoes scattering
             else:
                 path+=s
+                normPath+=s*w
                 hit+=1
 
                 xcor.append(x)
@@ -251,7 +254,7 @@ for g in [-0.1] :
                     x1=x+s*Ux
                     y1=y+s*Uy
                     if 0<=z1<=Lz:
-                        
+
                         zo=z
                         zn=z1
                         dor=abs(zn-zo)  #distance without scattering
@@ -302,6 +305,7 @@ for g in [-0.1] :
                         hit+=1
                         w=w*(1-Ua/Ut)
                         path+=s
+                        normPath+=s*w
                         loop=False
                         decoy=False
                         break
@@ -311,6 +315,7 @@ for g in [-0.1] :
                         x1=x+d*Ux
                         y1=y+d*Uy
                         path+=d
+                        normPath+=d*w
                         if abs(x1)>Lx/2 or abs(y1)>Ly/2:
                             sys=False
                             loop=False
@@ -328,7 +333,7 @@ for g in [-0.1] :
                         else:
                             mass+=w
                             front+=1
-                            
+
                             zo=z
                             zn=Lz
                             dor=abs(zn-zo)  #distance without scattering
@@ -372,7 +377,7 @@ for g in [-0.1] :
                             x=x1
                             y=y1
                             z=z1
-                            
+
                             xcor.append(x)
                             zcor.append(z)
 
@@ -408,7 +413,7 @@ for g in [-0.1] :
                                 #print('photon= ', photon)
                             break
                     else:
-                        
+
                         zo=z
                         zn=0
                         d=abs(z/Uz)
@@ -453,9 +458,10 @@ for g in [-0.1] :
                         z=0
                         d=abs(z/Uz)
                         path+=d
+                        normPath+=d*w
                         x1=x+d*Ux
                         y1=y+d*Uy
-                        
+
                         xcor.append(x1)
                         zcor.append(z)
 
