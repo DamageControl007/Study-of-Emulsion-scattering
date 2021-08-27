@@ -23,7 +23,7 @@ print("START")
 
 
 nm=10                                                                          #Number of hours in a day
-itr=10000                                                                   #number of iterations
+itr=100000                                                                   #number of iterations
 
 # System boundaries
 Lx=pow(10,7)
@@ -53,11 +53,11 @@ zcor=[]
 dv=100
 
 #0.001,0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.009,0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100
+#-1,-0.5,-0.1,0.1,0.5,0.9,0.99,1
 
+urange = arr.array('d',[10])
 
-urange = arr.array('d',[0.001,0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.009,0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100])
-
-for g in [0.1] :
+for g in [0.9,0.5,0.1,-0.1,-0.5,-1] :
     #if g<xxx : continue
     for Ut in urange :
         if g==xxx and Ut<yyy : continue
@@ -80,7 +80,7 @@ for g in [0.1] :
             Us=Ut*0.95
             Ua=Ut-Us
 
-            if i%100==0:
+            if i%1000==0:
                 print(i*100/itr,"%\tfor g = ",g,"\tfor Ut = ",Ut)
 
             # Initializing direction cosines
@@ -124,6 +124,7 @@ for g in [0.1] :
                 zn=Lz
                 dor=abs(zn-zo)  #distance without scattering
                 dnw=abs(s-d)
+                dnw=dnw*w
                 if zo==zn:
                     temp=(int(zo*dv))/dv
                     dic[temp]+=dnw
@@ -178,6 +179,7 @@ for g in [0.1] :
                 zn=z
                 dor=abs(zn-zo)  #distance without scattering
                 dnw=abs(s)
+                dnw=dnw*w
                 if zo==zn:
                     temp=(int(zo*dv))/dv
                     dic[temp]+=dnw
@@ -259,6 +261,7 @@ for g in [0.1] :
                         zn=z1
                         dor=abs(zn-zo)  #distance without scattering
                         dnw=abs(s)
+                        dnw=dnw*w
                         if zo==zn:
                             temp=(int(zo*dv))/dv
                             dic[temp]+=dnw
@@ -338,6 +341,7 @@ for g in [0.1] :
                             zn=Lz
                             dor=abs(zn-zo)  #distance without scattering
                             dnw=abs(d)
+                            dnw=dnw*w
                             if zo==zn:
                                 temp=(int(zo*dv))/dv
                                 dic[temp]+=dnw
@@ -419,6 +423,7 @@ for g in [0.1] :
                         d=abs(z/Uz)
                         dor=abs(zn-zo)  #distance without scattering
                         dnw=abs(d)
+                        dnw=dnw*w
                         if zo==zn:
                             temp=(int(zo*dv))/dv
                             dic[temp]+=dnw
@@ -495,7 +500,7 @@ for g in [0.1] :
                            w=w*m
                        else:
                            w=0
-        
+        """
         file_path = open("normpath.txt","a")
         file_path.write(str(g)+"\t")
         file_path.write(str(Ut)+"\t")
@@ -505,9 +510,9 @@ for g in [0.1] :
         file_path.write(str(back/itr)+"\t")
         file_path.write(str(thru/itr)+"\t")
         file_path.write(str(hit/itr)+"\n")
-        file_path.close()
-        """
-        file_path = open("g=0.txt","a")
+        file_path.close()"""
+        
+        file_path = open("wfe rt.txt","a")
         #xval=[]
         #yval=[]
         #del dic[1]
@@ -520,7 +525,7 @@ for g in [0.1] :
             file_path.write(str(key)+"\t")
             #yval.append(dic[key])
             file_path.write(str(dic[key])+"\n")
-        file_path.close()"""
+        file_path.close()
 #file_path.close()
 #print(dic)
 
@@ -559,8 +564,8 @@ with file_path as f:
 """
 #file_path.write(dataset)
 #plt.xlabel('z-coordinate')
-#plt.ylabel('x-coordinate')
-#plt.title("Plot depicting photon path\ng = "+str(g)+" & Ut = "+str(Ut)+"\nitr = "+str(itr)+"\ndiv = "+str(dv))
+#plt.ylabel('Residence time')
+#plt.title("Plot depicting photon residence time\ng = "+str(g)+" & Ut = "+str(Ut)+"\nitr = "+str(itr)+"\ndiv = "+str(dv))
 #plt.title("Plot depicting photon path\ng = "+str(g)+" & Ut = "+str(Ut))
 #plt.xlim(0,1)
 #plt.ylim(0,15000)
