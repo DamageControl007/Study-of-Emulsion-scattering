@@ -23,7 +23,7 @@ print("START")
 
 
 nm=10                                                                          #Number of hours in a day
-itr=1                                                                   #number of iterations
+itr=100000                                                                   #number of iterations
 
 # System boundaries
 Lx=pow(10,7)
@@ -79,7 +79,7 @@ for g in [0.9] :
             Us=Ut*0.95
             Ua=Ut-Us
 
-            if i%100==0:
+            if i%1000==0:
                 print(i*100/itr,"%\tfor g = ",g,"\tfor Ut = ",Ut)
 
             # Initializing direction cosines
@@ -499,33 +499,33 @@ for g in [0.9] :
         file_path.write(str(thru/itr)+"\t")
         file_path.write(str(hit/itr)+"\n")
         file_path.close()"""
-        """
-        file_path = open("g=0.txt","a")
-        #xval=[]
-        #yval=[]
-        #del dic[1]
-        #del dic[0]
+        name="rt [g = "+str(g)+"] [Ut = "+str(Ut)+"].txt"
+        file_path = open(name,"a")
+        xval=[]
+        yval=[]
+        del dic[1]
+        del dic[0]
         file_path.write("\ng="+str(g)+"\t")
         file_path.write("Ut="+str(Ut)+"\n\n")
         for key in dic:
             dic[key] = dic[key]*dv/itr
-            #xval.append(key)
+            xval.append(key)
             file_path.write(str(key)+"\t")
-            #yval.append(dic[key])
+            yval.append(dic[key])
             file_path.write(str(dic[key])+"\n")
-        file_path.close()"""
+        file_path.close()
 #file_path.close()
 #print(dic)
 
 #print(xval)
 #print(yval)
-#plt.plot(xval,yval)
+plt.plot(xval,yval)
 #plt.bar(*zip(*dic.items()))
-df = pd.DataFrame(list(zip(xcor,zcor)),columns=['xcor','zcor'])
+#df = pd.DataFrame(list(zip(xcor,zcor)),columns=['xcor','zcor'])
 #print(df)
 #print(zd)
 #plt.subplot(121)
-plt.plot(df['zcor'],df['xcor'],marker=".")
+#plt.plot(df['zcor'],df['xcor'],marker=".")
 #df=df.interpolate(method='linear')
 #print("\n")
 #print(df)
@@ -552,9 +552,9 @@ with file_path as f:
 """
 #file_path.write(dataset)
 plt.xlabel('z-coordinate')
-plt.ylabel('x-coordinate')
-#plt.title("Plot depicting photon path\ng = "+str(g)+" & Ut = "+str(Ut)+"\nitr = "+str(itr)+"\ndiv = "+str(dv))
-plt.title("Plot depicting photon path\ng = "+str(g)+" & Ut = "+str(Ut))
+plt.ylabel('Residence time')
+plt.title("Plot depicting photon residence time\ng = "+str(g)+" & Ut = "+str(Ut)+"\nitr = "+str(itr)+"\ndiv = "+str(dv))
+#plt.title("Plot depicting photon path\ng = "+str(g)+" & Ut = "+str(Ut))
 #plt.xlim(0,1)
 #plt.ylim(0,15000)
 #plt.subplot(122)
