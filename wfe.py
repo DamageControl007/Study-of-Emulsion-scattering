@@ -23,7 +23,7 @@ print("START")
 
 
 nm=10                                                                          #Number of hours in a day
-itr=10000                                                                   #number of iterations
+itr=100000                                                                   #number of iterations
 
 # System boundaries
 Lx=pow(10,7)
@@ -43,14 +43,12 @@ sensor_x=6
 sensor_y=0
 sensor_area=0.025
 
-xxx=0
-yyy=0
+xxx=1
+yyy=40
 
 #hit coordinates
 xcor=[]
 zcor=[]
-
-dv=100
 
 #0.001,0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.009,0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100
 
@@ -58,7 +56,7 @@ dv=100
 urange = arr.array('d',[0.001,0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.009,0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100])
 
 for g in [-1, -0.5, -0.1, 0.1, 0.5, 0.9, 0.99, 1] :
-    #if g<xxx : continue
+    if g<xxx : continue
     for Ut in urange :
         if g==xxx and Ut<yyy : continue
 
@@ -72,15 +70,13 @@ for g in [-1, -0.5, -0.1, 0.1, 0.5, 0.9, 0.99, 1] :
         mass=0
         hit=0
 
-        dic=defaultdict(float)
-
         for i in range(0,itr):
 
             #parameters
             Us=Ut*0.95
             Ua=Ut-Us
 
-            if i%100==0:
+            if i%1000==0:
                 print(i*100/itr,"%\tfor g = ",g,"\tfor Ut = ",Ut)
 
             # Initializing direction cosines
@@ -120,46 +116,6 @@ for g in [-1, -0.5, -0.1, 0.1, 0.5, 0.9, 0.99, 1] :
                 xcor.append(x1)
                 zcor.append(Lz)
 
-                zo=0
-                zn=Lz
-                dor=abs(zn-zo)  #distance without scattering
-                dnw=abs(s-d)
-                if zo==zn:
-                    temp=(int(zo*dv))/dv
-                    dic[temp]+=dnw
-                if zn>zo:
-                    temp=(int(zo*dv))/dv
-                    while temp<=zn :
-                        if temp+(1/dv)>zn:
-                            if temp>=zo:
-                                dic[temp]+=(zn-temp)*dnw/dor
-                            else :
-                                dic[temp]+=(zn-zo)*dnw/dor
-                        else:
-                            if temp>=zo:
-                                dic[temp]+=(1/dv)*dnw/dor
-                            else :
-                                dic[temp]+=(temp+(1/dv)-zo)*dnw/dor
-                        temp=temp+(1/dv)
-                        temp=(int((temp+(0.01/dv))*dv))/dv
-                if zn<zo:
-                    temp=(int(zo*dv))/dv
-                    while temp+(1/dv)>=zn:
-                        if temp+(1/dv)>zo:
-                            if temp<=zn:
-                                dic[temp]+=(zo-zn)*dnw/dor
-                            else:
-                                dic[temp]+=(zo-temp)*dnw/dor
-                        else:
-                            if temp<zn:
-                                dic[temp]+=(temp+(1/dv)-zn)*dnw/dor
-                            else:
-                                dic[temp]+=(1/dv)*dnw/dor
-                        temp=temp-(1/dv)
-                        temp=(int((temp+(0.01/dv))*dv))/dv
-                        if temp==0:
-                            break;
-
             # if it reaches the inlet boundary
             elif z<0:
                 back+=1
@@ -173,46 +129,6 @@ for g in [-1, -0.5, -0.1, 0.1, 0.5, 0.9, 0.99, 1] :
 
                 xcor.append(x)
                 zcor.append(z)
-
-                zo=0
-                zn=z
-                dor=abs(zn-zo)  #distance without scattering
-                dnw=abs(s)
-                if zo==zn:
-                    temp=(int(zo*dv))/dv
-                    dic[temp]+=dnw
-                if zn>zo:
-                    temp=(int(zo*dv))/dv
-                    while temp<=zn :
-                        if temp+(1/dv)>zn:
-                            if temp>=zo:
-                                dic[temp] += (zn-temp)*dnw/dor
-                            else :
-                                dic[temp] += (zn-zo)*dnw/dor
-                        else:
-                            if temp>=zo:
-                                dic[temp] += (1/dv)*dnw/dor
-                            else :
-                                dic[temp] += (temp+(1/dv)-zo)*dnw/dor
-                        temp=temp+(1/dv)
-                        temp=(int((temp+(0.01/dv))*dv))/dv
-                if zn<zo:
-                    temp=(int(zo*dv))/dv
-                    while temp+(1/dv)>=zn:
-                        if temp+(1/dv)>zo:
-                            if temp<=zn:
-                                dic[temp]+=(zo-zn)*dnw/dor
-                            else:
-                                dic[temp]+=(zo-temp)*dnw/dor
-                        else:
-                            if temp<zn:
-                                dic[temp]+=(temp+(1/dv)-zn)*dnw/dor
-                            else:
-                                dic[temp]+=(1/dv)*dnw/dor
-                        temp=temp-(1/dv)
-                        temp=(int((temp+(0.01/dv))*dv))/dv
-                        if temp==0:
-                            break;
 
             # While a photon is inside the system boundaries
             while 0<=z<=Lz and sys and w>0.0005:
@@ -254,47 +170,6 @@ for g in [-1, -0.5, -0.1, 0.1, 0.5, 0.9, 0.99, 1] :
                     x1=x+s*Ux
                     y1=y+s*Uy
                     if 0<=z1<=Lz:
-
-                        zo=z
-                        zn=z1
-                        dor=abs(zn-zo)  #distance without scattering
-                        dnw=abs(s)
-                        if zo==zn:
-                            temp=(int(zo*dv))/dv
-                            dic[temp]+=dnw
-                        if zn>zo:
-                            temp=(int(zo*dv))/dv
-                            while temp<=zn :
-                                if temp+(1/dv)>zn:
-                                    if temp>=zo:
-                                        dic[temp]+=(zn-temp)*dnw/dor
-                                    else :
-                                        dic[temp]+=(zn-zo)*dnw/dor
-                                else:
-                                    if temp>=zo:
-                                        dic[temp]+=(1/dv)*dnw/dor
-                                    else :
-                                        dic[temp]+=(temp+(1/dv)-zo)*dnw/dor
-                                temp=temp+(1/dv)
-                                temp=(int((temp+(0.01/dv))*dv))/dv
-                        if zn<zo:
-                            temp=(int(zo*dv))/dv
-                            while temp+(1/dv)>=zn:
-                                if temp+(1/dv)>zo:
-                                    if temp<=zn:
-                                        dic[temp]+=(zo-zn)*dnw/dor
-                                    else:
-                                        dic[temp]+=(zo-temp)*dnw/dor
-                                else:
-                                    if temp<zn:
-                                        dic[temp]+=(temp+(1/dv)-zn)*dnw/dor
-                                    else:
-                                        dic[temp]+=(1/dv)*dnw/dor
-                                temp=temp-(1/dv)
-                                temp=(int((temp+(0.01/dv))*dv))/dv
-                                if temp==0:
-                                    break;
-
                         x=x1
                         y=y1
                         z=z1
@@ -333,47 +208,6 @@ for g in [-1, -0.5, -0.1, 0.1, 0.5, 0.9, 0.99, 1] :
                         else:
                             mass+=w
                             front+=1
-
-                            zo=z
-                            zn=Lz
-                            dor=abs(zn-zo)  #distance without scattering
-                            dnw=abs(d)
-                            if zo==zn:
-                                temp=(int(zo*dv))/dv
-                                dic[temp]+=dnw
-                            if zn>zo:
-                                temp=(int(zo*dv))/dv
-                                while temp<=zn :
-                                    if temp+(1/dv)>zn:
-                                        if temp>=zo:
-                                            dic[temp]+=(zn-temp)*dnw/dor
-                                        else :
-                                            dic[temp]+=(zn-zo)*dnw/dor
-                                    else:
-                                        if temp>=zo:
-                                            dic[temp]+=(1/dv)*dnw/dor
-                                        else :
-                                            dic[temp]+=(temp+(1/dv)-zo)*dnw/dor
-                                    temp=temp+(1/dv)
-                                    temp=(int((temp+(0.01/dv))*dv))/dv
-                            if zn<zo:
-                                temp=(int(zo*dv))/dv
-                                while temp+(1/dv)>=zn:
-                                    if temp+(1/dv)>zo:
-                                        if temp<=zn:
-                                            dic[temp]+=(zo-zn)*dnw/dor
-                                        else:
-                                            dic[temp]+=(zo-temp)*dnw/dor
-                                    else:
-                                        if temp<zn:
-                                            dic[temp]+=(temp+(1/dv)-zn)*dnw/dor
-                                        else:
-                                            dic[temp]+=(1/dv)*dnw/dor
-                                    temp=temp-(1/dv)
-                                    temp=(int((temp+(0.01/dv))*dv))/dv
-                                    if temp==0:
-                                        break;
-
                             x=x1
                             y=y1
                             z=z1
@@ -413,48 +247,6 @@ for g in [-1, -0.5, -0.1, 0.1, 0.5, 0.9, 0.99, 1] :
                                 #print('photon= ', photon)
                             break
                     else:
-
-                        zo=z
-                        zn=0
-                        d=abs(z/Uz)
-                        dor=abs(zn-zo)  #distance without scattering
-                        dnw=abs(d)
-                        if zo==zn:
-                            temp=(int(zo*dv))/dv
-                            dic[temp]+=dnw
-                        if zn>zo:
-                            temp=(int(zo*dv))/dv
-                            while temp<=zn :
-                                if temp+(1/dv)>zn:
-                                    if temp>=zo:
-                                        dic[temp]+=(zn-temp)*dnw/dor
-                                    else :
-                                        dic[temp]+=(zn-zo)*dnw/dor
-                                else:
-                                    if temp>=zo:
-                                        dic[temp]+=(1/dv)*dnw/dor
-                                    else :
-                                        dic[temp]+=(temp+(1/dv)-zo)*dnw/dor
-                                temp=temp+(1/dv)
-                                temp=(int((temp+(0.01/dv))*dv))/dv
-                        if zn<zo:
-                            temp=(int(zo*dv))/dv
-                            while temp+(1/dv)>=zn:
-                                if temp+(1/dv)>zo:
-                                    if temp<=zn:
-                                        dic[temp]+=(zo-zn)*dnw/dor
-                                    else:
-                                        dic[temp]+=(zo-temp)*dnw/dor
-                                else:
-                                    if temp<zn:
-                                        dic[temp]+=(temp+(1/dv)-zn)*dnw/dor
-                                    else:
-                                        dic[temp]+=(1/dv)*dnw/dor
-                                temp=temp-(1/dv)
-                                temp=(int((temp+(0.01/dv))*dv))/dv
-                                if temp==0:
-                                    break;
-
                         z=0
                         d=abs(z/Uz)
                         path+=d
@@ -496,7 +288,7 @@ for g in [-1, -0.5, -0.1, 0.1, 0.5, 0.9, 0.99, 1] :
                        else:
                            w=0
 
-        file_path = open("normpath.txt","a")
+        file_path = open("normpath itr=100000.txt","a")
         file_path.write(str(g)+"\t")
         file_path.write(str(Ut)+"\t")
         file_path.write(str(normPath/itr)+"\t")
@@ -506,79 +298,15 @@ for g in [-1, -0.5, -0.1, 0.1, 0.5, 0.9, 0.99, 1] :
         file_path.write(str(thru/itr)+"\t")
         file_path.write(str(hit/itr)+"\n")
         file_path.close()
-        """
-        file_path = open("g=0.txt","a")
-        #xval=[]
-        #yval=[]
-        #del dic[1]
-        #del dic[0]
-        file_path.write("\ng="+str(g)+"\t")
-        file_path.write("Ut="+str(Ut)+"\n\n")
-        for key in dic:
-            dic[key] = dic[key]*dv/itr
-            #xval.append(key)
-            file_path.write(str(key)+"\t")
-            #yval.append(dic[key])
-            file_path.write(str(dic[key])+"\n")
-        file_path.close()"""
-#file_path.close()
-#print(dic)
-
-#print(xval)
-#print(yval)
-#plt.plot(xval,yval)
-#plt.bar(*zip(*dic.items()))
 #df = pd.DataFrame(list(zip(xcor,zcor)),columns=['xcor','zcor'])
-#print(df)
-#print(zd)
-#plt.subplot(121)
 #plt.plot(df['zcor'],df['xcor'],marker=".")
-#df=df.interpolate(method='linear')
-#print("\n")
-#print(df)
-#plt.subplot(122)
-#myplot = sns.kdeplot(data=df,x='zcor',cut=0,marker=".")
-#sns.kdeplot(zd,cut=0,label='bw_adjust=1')
-#sns.kdeplot(data=df,x='zcor',y='xcor',cmap="seismic",fill=True,cbar=True,cut=0)
-#sns.displot(zd,binwidth=0.005,stat="count")
-#plt.plot(itr)
-#plt.axhline(y = itr, color = 'r', linestyle = '-',xmin=0,xmax=1)
-#sns.displot(zd,binwidth=0.001,stat="probability")
-#sns.displot(zd,binwidth=0.02,stat="probability")
-#sns.displot(zd,binwidth=0.001,stat="count")
-#sns.displot(zp,binwidth=0.02,stat="count")
-#sns.displot(zd,binwidth=0.1,stat="count")
-"""
-dataset = myplot.get_lines()[0].get_data()
-data = pd.DataFrame(dataset).transpose()
-#print(data)
-
-with file_path as f:
-    dfAsString = data.to_string(header=False, index=False)
-    f.write(dfAsString)
-"""
-#file_path.write(dataset)
 #plt.xlabel('z-coordinate')
 #plt.ylabel('x-coordinate')
 #plt.title("Plot depicting photon path\ng = "+str(g)+" & Ut = "+str(Ut)+"\nitr = "+str(itr)+"\ndiv = "+str(dv))
 #plt.title("Plot depicting photon path\ng = "+str(g)+" & Ut = "+str(Ut))
 #plt.xlim(0,1)
 #plt.ylim(0,15000)
-#plt.subplot(122)
-#plt.plot(df['zcor'],df['xcor'],marker=".")
 #plt.legend()
 #plt.show()
-#print(dic)
 
 print("END")
-
-# =============================================================================
-# with open(heading + '_'+ wavelength + ' nm'+".csv", 'w', newline='') as f:
-#     thewriter=csv.writer(f)
-#     thewriter.writerow(['Normalised weigth L/Lo vs volume fraction'])
-#     thewriter.writerow(['wavelength'])
-#     thewriter.writerow([ wavelength])
-#     thewriter.writerow(['Time', 'I/Io', 'backscattering','pm2.5','PBLH', 'UtxLo'])
-#     for i in range(0,nm):
-#         thewriter.writerow([time[i], weight[i], knight[i], pm[i], boun[i], UtxLo[i]])
-# =============================================================================
