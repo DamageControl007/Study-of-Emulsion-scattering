@@ -595,8 +595,8 @@ for g in [0] :
                                     break;
                         zd.append(0)
 
-                        z=0
                         d=abs(z/Uz)
+                        z=0
                         path+=d
                         x1=x+d*Ux
                         y1=y+d*Uy
