@@ -19,7 +19,7 @@ from collections import OrderedDict
 from collections import defaultdict
 
 print("START CODE")
-for g in [-0.9,-0.5,-0.1]:
+for g in [-0.5,-0.1,0.1]:
     x=[]
     itr=1000000
     for i in range(0,itr):
