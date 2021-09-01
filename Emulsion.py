@@ -198,8 +198,8 @@ for i in range(0,itr):
                     
 
             else:
-                z=0
                 d=abs(z/Uz)
+                z=0
                 path+=d
                 x1=x+d*Ux
                 y1=y+d*Uy
