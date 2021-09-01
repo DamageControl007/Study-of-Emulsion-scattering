@@ -23,7 +23,7 @@ print("START")
 
 
 nm=10                                                                          #Number of hours in a day
-itr=100000                                                                   #number of iterations
+itr=10000                                                                   #number of iterations
 
 # System boundaries
 Lx=pow(10,7)
@@ -43,8 +43,8 @@ sensor_x=6
 sensor_y=0
 sensor_area=0.025
 
-xxx=1
-yyy=40
+xxx=0
+yyy=0
 
 #hit coordinates
 xcor=[]
@@ -56,7 +56,7 @@ zcor=[]
 urange = arr.array('d',[0.001,0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.009,0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100])
 
 for g in [-1, -0.5, -0.1, 0.1, 0.5, 0.9, 0.99, 1] :
-    if g<xxx : continue
+    #if g<xxx : continue
     for Ut in urange :
         if g==xxx and Ut<yyy : continue
 
@@ -76,7 +76,7 @@ for g in [-1, -0.5, -0.1, 0.1, 0.5, 0.9, 0.99, 1] :
             Us=Ut*0.95
             Ua=Ut-Us
 
-            if i%1000==0:
+            if i%100==0:
                 print(i*100/itr,"%\tfor g = ",g,"\tfor Ut = ",Ut)
 
             # Initializing direction cosines
@@ -288,7 +288,7 @@ for g in [-1, -0.5, -0.1, 0.1, 0.5, 0.9, 0.99, 1] :
                        else:
                            w=0
 
-        file_path = open("normpath itr=100000.txt","a")
+        file_path = open("updated normpath itr=100000.txt","a")
         file_path.write(str(g)+"\t")
         file_path.write(str(Ut)+"\t")
         file_path.write(str(normPath/itr)+"\t")
