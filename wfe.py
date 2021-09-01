@@ -247,8 +247,8 @@ for g in [-1, -0.5, -0.1, 0.1, 0.5, 0.9, 0.99, 1] :
                                 #print('photon= ', photon)
                             break
                     else:
-                        z=0
                         d=abs(z/Uz)
+                        z=0
                         path+=d
                         normPath+=d*w
                         x1=x+d*Ux
