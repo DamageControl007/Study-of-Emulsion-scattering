@@ -23,7 +23,7 @@ print("START")
 
 
 nm=10                                                                          #Number of hours in a day
-itr=100000                                                                   #number of iterations
+itr=1                                                                   #number of iterations
 
 # System boundaries
 Lx=pow(10,7)
@@ -55,9 +55,9 @@ dv=100
 #0.001,0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.009,0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100
 
 
-urange = arr.array('d',[10])
+urange = arr.array('d',[100])
 
-for g in [0.9] :
+for g in [-1] :
     #if g<xxx : continue
     for Ut in urange :
         if g==xxx and Ut<yyy : continue
@@ -500,6 +500,7 @@ for g in [0.9] :
         file_path.write(str(thru/itr)+"\t")
         file_path.write(str(hit/itr)+"\n")
         file_path.close()"""
+        """
         name="rt [g = "+str(g)+"] [Ut = "+str(Ut)+"].txt"
         file_path = open(name,"a")
         xval=[]
@@ -514,19 +515,21 @@ for g in [0.9] :
             file_path.write(str(key)+"\t")
             yval.append(dic[key])
             file_path.write(str(dic[key])+"\n")
-        file_path.close()
+        file_path.close()"""
 #file_path.close()
 #print(dic)
 
 #print(xval)
 #print(yval)
-plt.plot(xval,yval)
+#plt.plot(xval,yval)
 #plt.bar(*zip(*dic.items()))
-#df = pd.DataFrame(list(zip(xcor,zcor)),columns=['xcor','zcor'])
+df = pd.DataFrame(list(zip(xcor,zcor)),columns=['xcor','zcor'])
 #print(df)
 #print(zd)
 #plt.subplot(121)
-#plt.plot(df['zcor'],df['xcor'],marker=".")
+print(df)
+print(path/itr)
+plt.plot(df['zcor'],df['xcor'],marker=".")
 #df=df.interpolate(method='linear')
 #print("\n")
 #print(df)
@@ -552,9 +555,9 @@ with file_path as f:
     f.write(dfAsString)
 """
 #file_path.write(dataset)
-plt.xlabel('z-coordinate')
-plt.ylabel('Residence time')
-plt.title("Plot depicting photon residence time\ng = "+str(g)+" & Ut = "+str(Ut)+"\nitr = "+str(itr)+"\ndiv = "+str(dv))
+#plt.xlabel('z-coordinate')
+#plt.ylabel('Residence time')
+#plt.title("Plot depicting photon residence time\ng = "+str(g)+" & Ut = "+str(Ut)+"\nitr = "+str(itr)+"\ndiv = "+str(dv))
 #plt.title("Plot depicting photon path\ng = "+str(g)+" & Ut = "+str(Ut))
 #plt.xlim(0,1)
 #plt.ylim(0,15000)
