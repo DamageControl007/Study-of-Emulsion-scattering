@@ -450,9 +450,10 @@ for g in [0.9] :
                                 if temp==0:
                                     break;
 
-                        z=0
+                        
                         d=abs(z/Uz)
                         path+=d
+                        z=0
                         x1=x+d*Ux
                         y1=y+d*Uy
                         
