@@ -23,7 +23,7 @@ print("START")
 
 
 nm=10                                                                          #Number of hours in a day
-itr=10000                                                                   #number of iterations
+itr=100000                                                                   #number of iterations
 
 # System boundaries
 Lx=pow(10,7)
@@ -53,10 +53,14 @@ zcor=[]
 #0.001,0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.009,0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100
 
 
-urange = arr.array('d',[0.001,0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.009,0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100])
+urange = arr.array('d',[10])
 
-for g in [-1, -0.5, -0.1, 0.1, 0.5, 0.9, 0.99, 1] :
+for g in [-0.9, -0.5, -0.1, 0.1, 0.9] :
     #if g<xxx : continue
+
+    #list for Uz
+    Uzl=[]
+
     for Ut in urange :
         if g==xxx and Ut<yyy : continue
 
@@ -76,13 +80,14 @@ for g in [-1, -0.5, -0.1, 0.1, 0.5, 0.9, 0.99, 1] :
             Us=Ut*0.95
             Ua=Ut-Us
 
-            if i%100==0:
+            if i%1000==0:
                 print(i*100/itr,"%\tfor g = ",g,"\tfor Ut = ",Ut)
 
             # Initializing direction cosines
             Ux=0
             Uy=0
             Uz=1
+            #Uzl.append(Uz)
             w=1       # photon weight
 
             # initializing coordinates
@@ -160,6 +165,7 @@ for g in [-1, -0.5, -0.1, 0.1, 0.5, 0.9, 0.99, 1] :
                     Uy_1=(sin_theta*(Uz*Uy*cos_phi + Ux*sin_phi)/(Usqr)) + Uy*cos_theta
                 Ux=Ux_1
                 Uz=Uz_1
+                Uzl.append(Uz)
                 Uy=Uy_1
                 e=random.uniform(0,1)
                 s=-np.log(e)/Ut
@@ -287,7 +293,7 @@ for g in [-1, -0.5, -0.1, 0.1, 0.5, 0.9, 0.99, 1] :
                            w=w*m
                        else:
                            w=0
-
+        """
         file_path = open("updated normpath itr=100000.txt","a")
         file_path.write(str(g)+"\t")
         file_path.write(str(Ut)+"\t")
@@ -297,7 +303,10 @@ for g in [-1, -0.5, -0.1, 0.1, 0.5, 0.9, 0.99, 1] :
         file_path.write(str(back/itr)+"\t")
         file_path.write(str(thru/itr)+"\t")
         file_path.write(str(hit/itr)+"\n")
-        file_path.close()
+        file_path.close()"""
+    print("START PLOT")
+    sns.kdeplot(Uzl,label=g)
+    print("END PLOT")
 #df = pd.DataFrame(list(zip(xcor,zcor)),columns=['xcor','zcor'])
 #plt.plot(df['zcor'],df['xcor'],marker=".")
 #plt.xlabel('z-coordinate')
@@ -308,5 +317,11 @@ for g in [-1, -0.5, -0.1, 0.1, 0.5, 0.9, 0.99, 1] :
 #plt.ylim(0,15000)
 #plt.legend()
 #plt.show()
+
+plt.xlim(-1,1)
+plt.title("Uz distribution"+"\nitr = "+str(itr))
+plt.xlabel('Uz')
+plt.legend()
+plt.show()
 
 print("END")
