@@ -55,7 +55,7 @@ zcor=[]
 
 urange = arr.array('d',[10])
 
-for g in [-0.9, -0.5, -0.1, 0.1, 0.9] :
+for g in [-0.99,-0.9, -0.5, -0.1, 0.1, 0.5, 0.9, 0.99] :
     #if g<xxx : continue
 
     #list for Uz
@@ -87,7 +87,7 @@ for g in [-0.9, -0.5, -0.1, 0.1, 0.9] :
             Ux=0
             Uy=0
             Uz=1
-            #Uzl.append(Uz)
+            Uzl.append(Uz)
             w=1       # photon weight
 
             # initializing coordinates
