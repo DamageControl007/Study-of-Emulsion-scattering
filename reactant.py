@@ -23,7 +23,7 @@ print("START")
 
 
 nm=10                                                                          #Number of hours in a day
-itr=100000                                                                   #number of iterations
+itr=1                                                                   #number of iterations
 
 # System boundaries
 Lx=pow(10,7)
@@ -57,10 +57,10 @@ dv=100
 
 urange = arr.array('d',[10])
 
-for g in [0.9,0.5,0.1,-0.1,-0.5,-1] :
+for g in [0.9] :
     #if g<xxx : continue
     for Ut in urange :
-        if g==xxx and Ut<yyy : continue
+        #if g==xxx and Ut<yyy : continue
 
         #observations
         photon=0
@@ -90,7 +90,7 @@ for g in [0.9,0.5,0.1,-0.1,-0.5,-1] :
             w=1       # photon weight
 
             # initializing coordinates
-            x=random.uniform(-100,100)
+            x=0
             y=0
             z=0
 
@@ -122,44 +122,7 @@ for g in [0.9,0.5,0.1,-0.1,-0.5,-1] :
 
                 zo=0
                 zn=Lz
-                dor=abs(zn-zo)  #distance without scattering
-                dnw=abs(s-d)
-                dnw=dnw*w
-                if zo==zn:
-                    temp=(int(zo*dv))/dv
-                    dic[temp]+=dnw
-                if zn>zo:
-                    temp=(int(zo*dv))/dv
-                    while temp<=zn :
-                        if temp+(1/dv)>zn:
-                            if temp>=zo:
-                                dic[temp]+=(zn-temp)*dnw/dor
-                            else :
-                                dic[temp]+=(zn-zo)*dnw/dor
-                        else:
-                            if temp>=zo:
-                                dic[temp]+=(1/dv)*dnw/dor
-                            else :
-                                dic[temp]+=(temp+(1/dv)-zo)*dnw/dor
-                        temp=temp+(1/dv)
-                        temp=(int((temp+(0.01/dv))*dv))/dv
-                if zn<zo:
-                    temp=(int(zo*dv))/dv
-                    while temp+(1/dv)>=zn:
-                        if temp+(1/dv)>zo:
-                            if temp<=zn:
-                                dic[temp]+=(zo-zn)*dnw/dor
-                            else:
-                                dic[temp]+=(zo-temp)*dnw/dor
-                        else:
-                            if temp<zn:
-                                dic[temp]+=(temp+(1/dv)-zn)*dnw/dor
-                            else:
-                                dic[temp]+=(1/dv)*dnw/dor
-                        temp=temp-(1/dv)
-                        temp=(int((temp+(0.01/dv))*dv))/dv
-                        if temp==0:
-                            break;
+                #add here 1
 
             # if it reaches the inlet boundary
             elif z<0:
@@ -177,44 +140,7 @@ for g in [0.9,0.5,0.1,-0.1,-0.5,-1] :
 
                 zo=0
                 zn=z
-                dor=abs(zn-zo)  #distance without scattering
-                dnw=abs(s)
-                dnw=dnw*w
-                if zo==zn:
-                    temp=(int(zo*dv))/dv
-                    dic[temp]+=dnw
-                if zn>zo:
-                    temp=(int(zo*dv))/dv
-                    while temp<=zn :
-                        if temp+(1/dv)>zn:
-                            if temp>=zo:
-                                dic[temp] += (zn-temp)*dnw/dor
-                            else :
-                                dic[temp] += (zn-zo)*dnw/dor
-                        else:
-                            if temp>=zo:
-                                dic[temp] += (1/dv)*dnw/dor
-                            else :
-                                dic[temp] += (temp+(1/dv)-zo)*dnw/dor
-                        temp=temp+(1/dv)
-                        temp=(int((temp+(0.01/dv))*dv))/dv
-                if zn<zo:
-                    temp=(int(zo*dv))/dv
-                    while temp+(1/dv)>=zn:
-                        if temp+(1/dv)>zo:
-                            if temp<=zn:
-                                dic[temp]+=(zo-zn)*dnw/dor
-                            else:
-                                dic[temp]+=(zo-temp)*dnw/dor
-                        else:
-                            if temp<zn:
-                                dic[temp]+=(temp+(1/dv)-zn)*dnw/dor
-                            else:
-                                dic[temp]+=(1/dv)*dnw/dor
-                        temp=temp-(1/dv)
-                        temp=(int((temp+(0.01/dv))*dv))/dv
-                        if temp==0:
-                            break;
+                #add here 2
 
             # While a photon is inside the system boundaries
             while 0<=z<=Lz and sys and w>0.0005:
@@ -259,44 +185,7 @@ for g in [0.9,0.5,0.1,-0.1,-0.5,-1] :
 
                         zo=z
                         zn=z1
-                        dor=abs(zn-zo)  #distance without scattering
-                        dnw=abs(s)
-                        dnw=dnw*w
-                        if zo==zn:
-                            temp=(int(zo*dv))/dv
-                            dic[temp]+=dnw
-                        if zn>zo:
-                            temp=(int(zo*dv))/dv
-                            while temp<=zn :
-                                if temp+(1/dv)>zn:
-                                    if temp>=zo:
-                                        dic[temp]+=(zn-temp)*dnw/dor
-                                    else :
-                                        dic[temp]+=(zn-zo)*dnw/dor
-                                else:
-                                    if temp>=zo:
-                                        dic[temp]+=(1/dv)*dnw/dor
-                                    else :
-                                        dic[temp]+=(temp+(1/dv)-zo)*dnw/dor
-                                temp=temp+(1/dv)
-                                temp=(int((temp+(0.01/dv))*dv))/dv
-                        if zn<zo:
-                            temp=(int(zo*dv))/dv
-                            while temp+(1/dv)>=zn:
-                                if temp+(1/dv)>zo:
-                                    if temp<=zn:
-                                        dic[temp]+=(zo-zn)*dnw/dor
-                                    else:
-                                        dic[temp]+=(zo-temp)*dnw/dor
-                                else:
-                                    if temp<zn:
-                                        dic[temp]+=(temp+(1/dv)-zn)*dnw/dor
-                                    else:
-                                        dic[temp]+=(1/dv)*dnw/dor
-                                temp=temp-(1/dv)
-                                temp=(int((temp+(0.01/dv))*dv))/dv
-                                if temp==0:
-                                    break;
+                        #add here 3
 
                         x=x1
                         y=y1
@@ -339,44 +228,7 @@ for g in [0.9,0.5,0.1,-0.1,-0.5,-1] :
 
                             zo=z
                             zn=Lz
-                            dor=abs(zn-zo)  #distance without scattering
-                            dnw=abs(d)
-                            dnw=dnw*w
-                            if zo==zn:
-                                temp=(int(zo*dv))/dv
-                                dic[temp]+=dnw
-                            if zn>zo:
-                                temp=(int(zo*dv))/dv
-                                while temp<=zn :
-                                    if temp+(1/dv)>zn:
-                                        if temp>=zo:
-                                            dic[temp]+=(zn-temp)*dnw/dor
-                                        else :
-                                            dic[temp]+=(zn-zo)*dnw/dor
-                                    else:
-                                        if temp>=zo:
-                                            dic[temp]+=(1/dv)*dnw/dor
-                                        else :
-                                            dic[temp]+=(temp+(1/dv)-zo)*dnw/dor
-                                    temp=temp+(1/dv)
-                                    temp=(int((temp+(0.01/dv))*dv))/dv
-                            if zn<zo:
-                                temp=(int(zo*dv))/dv
-                                while temp+(1/dv)>=zn:
-                                    if temp+(1/dv)>zo:
-                                        if temp<=zn:
-                                            dic[temp]+=(zo-zn)*dnw/dor
-                                        else:
-                                            dic[temp]+=(zo-temp)*dnw/dor
-                                    else:
-                                        if temp<zn:
-                                            dic[temp]+=(temp+(1/dv)-zn)*dnw/dor
-                                        else:
-                                            dic[temp]+=(1/dv)*dnw/dor
-                                    temp=temp-(1/dv)
-                                    temp=(int((temp+(0.01/dv))*dv))/dv
-                                    if temp==0:
-                                        break;
+                            #add here 4
 
                             x=x1
                             y=y1
@@ -420,45 +272,7 @@ for g in [0.9,0.5,0.1,-0.1,-0.5,-1] :
 
                         zo=z
                         zn=0
-                        d=abs(z/Uz)
-                        dor=abs(zn-zo)  #distance without scattering
-                        dnw=abs(d)
-                        dnw=dnw*w
-                        if zo==zn:
-                            temp=(int(zo*dv))/dv
-                            dic[temp]+=dnw
-                        if zn>zo:
-                            temp=(int(zo*dv))/dv
-                            while temp<=zn :
-                                if temp+(1/dv)>zn:
-                                    if temp>=zo:
-                                        dic[temp]+=(zn-temp)*dnw/dor
-                                    else :
-                                        dic[temp]+=(zn-zo)*dnw/dor
-                                else:
-                                    if temp>=zo:
-                                        dic[temp]+=(1/dv)*dnw/dor
-                                    else :
-                                        dic[temp]+=(temp+(1/dv)-zo)*dnw/dor
-                                temp=temp+(1/dv)
-                                temp=(int((temp+(0.01/dv))*dv))/dv
-                        if zn<zo:
-                            temp=(int(zo*dv))/dv
-                            while temp+(1/dv)>=zn:
-                                if temp+(1/dv)>zo:
-                                    if temp<=zn:
-                                        dic[temp]+=(zo-zn)*dnw/dor
-                                    else:
-                                        dic[temp]+=(zo-temp)*dnw/dor
-                                else:
-                                    if temp<zn:
-                                        dic[temp]+=(temp+(1/dv)-zn)*dnw/dor
-                                    else:
-                                        dic[temp]+=(1/dv)*dnw/dor
-                                temp=temp-(1/dv)
-                                temp=(int((temp+(0.01/dv))*dv))/dv
-                                if temp==0:
-                                    break;
+                        #add here 5
 
                         d=abs(z/Uz)
                         z=0
