@@ -120,7 +120,11 @@ for g in [0.9] :
                 xcor.append(x1)
                 zcor.append(Lz)
 
+                xo=0
+                yo=0
                 zo=0
+                xn=0
+                yn=0
                 zn=Lz
                 #add here 1
 
@@ -138,7 +142,11 @@ for g in [0.9] :
                 xcor.append(x)
                 zcor.append(z)
 
+                xo=0
+                yo=0
                 zo=0
+                xn=x
+                yn=y
                 zn=z
                 #add here 2
 
@@ -183,7 +191,11 @@ for g in [0.9] :
                     y1=y+s*Uy
                     if 0<=z1<=Lz:
 
+                        xo=x
+                        yo=y
                         zo=z
+                        xn=x1
+                        yn=y1
                         zn=z1
                         #add here 3
 
@@ -226,7 +238,11 @@ for g in [0.9] :
                             mass+=w
                             front+=1
 
+                            xo=x
+                            yo=y
                             zo=z
+                            xn=x1
+                            yn=y1
                             zn=Lz
                             #add here 4
 
@@ -269,18 +285,22 @@ for g in [0.9] :
                                 #print('photon= ', photon)
                             break
                     else:
-
-                        zo=z
-                        zn=0
-                        #add here 5
-
                         d=abs(z/Uz)
-                        z=0
                         path+=d
                         normPath+=d*w
                         x1=x+d*Ux
                         y1=y+d*Uy
 
+                        xo=x
+                        yo=y
+                        zo=z
+                        xn=x1
+                        yn=y1
+                        zn=0
+                        #add here 5
+
+                        
+                        z=0
                         xcor.append(x1)
                         zcor.append(z)
 
