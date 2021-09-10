@@ -51,7 +51,7 @@ xcor=[]
 zcor=[]
 
 #sphere parameters
-sr=0.00000001
+sr=0.001
 sx=0
 sy=0
 sz=0.5
@@ -61,7 +61,7 @@ sz=0.5
 
 urange = arr.array('d',[10])
 
-for g in [0.9] :
+for g in [0.1] :
     #if g<xxx : continue
     for Ut in urange :
         #if g==xxx and Ut<yyy : continue
@@ -76,6 +76,7 @@ for g in [0.9] :
         mass=0
         hit=0
         absorbWeight=0
+        frequency=0
 
         for i in range(0,itr):
 
@@ -139,6 +140,7 @@ for g in [0.9] :
                 hh=cc*cc - hh
                 hh=pow(float(abs(hh)),0.5)
                 if hh<=sr:
+
                     absorbWeight+=w         # Photon weight is absorbed
                     continue                # Turn for next photon
 
@@ -402,7 +404,7 @@ for g in [0.9] :
                            w=w*m
                        else:
                            w=0
-        
+        print("frequency: ", frequency/itr)
         file_path = open("absorbWeight.txt","a")
         file_path.write(str(g)+"\t")
         file_path.write(str(Ut)+"\t")
