@@ -23,7 +23,7 @@ print("START")
 
 
 nm=10                                                                          #Number of hours in a day
-itr=1                                                                   #number of iterations
+itr=100000                                                                   #number of iterations
 
 # System boundaries
 Lx=pow(10,7)
@@ -51,7 +51,7 @@ xcor=[]
 zcor=[]
 
 #sphere parameters
-sr=0.1
+sr=0.00000001
 sx=0
 sy=0
 sz=0.5
@@ -137,7 +137,7 @@ for g in [0.9] :
                 hh=hh/(2*aa)
                 hh=hh*hh
                 hh=cc*cc - hh
-                hh=pow(hh,0.5)
+                hh=pow(float(abs(hh)),0.5)
                 if hh<=sr:
                     absorbWeight+=w         # Photon weight is absorbed
                     continue                # Turn for next photon
@@ -171,7 +171,7 @@ for g in [0.9] :
                 hh=hh/(2*aa)
                 hh=hh*hh
                 hh=cc*cc - hh
-                hh=pow(hh,0.5)
+                hh=pow(float(abs(hh)),0.5)
                 if hh<=sr:
                     absorbWeight+=w
                     w=0
@@ -233,7 +233,7 @@ for g in [0.9] :
                         hh=hh/(2*aa)
                         hh=hh*hh
                         hh=cc*cc - hh
-                        hh=pow(hh,0.5)
+                        hh=pow(float(abs(hh)),0.5)
                         if hh<=sr:
                             absorbWeight+=w   # Recording the absorbed weight
                             w=0               # Setting photon weight =0
@@ -294,7 +294,7 @@ for g in [0.9] :
                             hh=hh/(2*aa)
                             hh=hh*hh
                             hh=cc*cc - hh
-                            hh=pow(hh,0.5)
+                            hh=pow(float(abs(hh)),0.5)
                             if hh<=sr:
                                 absorbWeight+=w   # Recording the absorbed weight
                                 w=0               # Setting photon weight =0
@@ -361,7 +361,7 @@ for g in [0.9] :
                         hh=hh/(2*aa)
                         hh=hh*hh
                         hh=cc*cc - hh
-                        hh=pow(hh,0.5)
+                        hh=pow(float(abs(hh)),0.5)
                         if hh<=sr:
                             absorbWeight+=w   # Recording the absorbed weight
                             w=0               # Setting photon weight =0
@@ -402,90 +402,17 @@ for g in [0.9] :
                            w=w*m
                        else:
                            w=0
-        """
-        file_path = open("normpath.txt","a")
+        
+        file_path = open("absorbWeight.txt","a")
         file_path.write(str(g)+"\t")
         file_path.write(str(Ut)+"\t")
-        file_path.write(str(normPath/itr)+"\t")
-        file_path.write(str(path/itr)+"\t")
-        file_path.write(str(front/itr)+"\t")
-        file_path.write(str(back/itr)+"\t")
-        file_path.write(str(thru/itr)+"\t")
-        file_path.write(str(hit/itr)+"\n")
-        file_path.close()"""
-
-        file_path = open("wfe rt.txt","a")
-        #xval=[]
-        #yval=[]
-        #del dic[1]
-        #del dic[0]
-        file_path.write("\ng="+str(g)+"\t")
-        file_path.write("Ut="+str(Ut)+"\n\n")
-        for key in dic:
-            dic[key] = dic[key]*dv/itr
-            #xval.append(key)
-            file_path.write(str(key)+"\t")
-            #yval.append(dic[key])
-            file_path.write(str(dic[key])+"\n")
+        file_path.write(str(sr)+"\t")
+        file_path.write(str(sx)+"\t")
+        file_path.write(str(sy)+"\t")
+        file_path.write(str(sz)+"\t")
+        file_path.write(str(itr)+"\t")
+        file_path.write(str(absorbWeight/itr)+"\n")
         file_path.close()
-#file_path.close()
-#print(dic)
 
-#print(xval)
-#print(yval)
-#plt.plot(xval,yval)
-#plt.bar(*zip(*dic.items()))
-#df = pd.DataFrame(list(zip(xcor,zcor)),columns=['xcor','zcor'])
-#print(df)
-#print(zd)
-#plt.subplot(121)
-#plt.plot(df['zcor'],df['xcor'],marker=".")
-#df=df.interpolate(method='linear')
-#print("\n")
-#print(df)
-#plt.subplot(122)
-#myplot = sns.kdeplot(data=df,x='zcor',cut=0,marker=".")
-#sns.kdeplot(zd,cut=0,label='bw_adjust=1')
-#sns.kdeplot(data=df,x='zcor',y='xcor',cmap="seismic",fill=True,cbar=True,cut=0)
-#sns.displot(zd,binwidth=0.005,stat="count")
-#plt.plot(itr)
-#plt.axhline(y = itr, color = 'r', linestyle = '-',xmin=0,xmax=1)
-#sns.displot(zd,binwidth=0.001,stat="probability")
-#sns.displot(zd,binwidth=0.02,stat="probability")
-#sns.displot(zd,binwidth=0.001,stat="count")
-#sns.displot(zp,binwidth=0.02,stat="count")
-#sns.displot(zd,binwidth=0.1,stat="count")
-"""
-dataset = myplot.get_lines()[0].get_data()
-data = pd.DataFrame(dataset).transpose()
-#print(data)
-
-with file_path as f:
-    dfAsString = data.to_string(header=False, index=False)
-    f.write(dfAsString)
-"""
-#file_path.write(dataset)
-#plt.xlabel('z-coordinate')
-#plt.ylabel('Residence time')
-#plt.title("Plot depicting photon residence time\ng = "+str(g)+" & Ut = "+str(Ut)+"\nitr = "+str(itr)+"\ndiv = "+str(dv))
-#plt.title("Plot depicting photon path\ng = "+str(g)+" & Ut = "+str(Ut))
-#plt.xlim(0,1)
-#plt.ylim(0,15000)
-#plt.subplot(122)
-#plt.plot(df['zcor'],df['xcor'],marker=".")
-#plt.legend()
-#plt.show()
-#print(dic)
 
 print("END")
-
-# =============================================================================
-# with open(heading + '_'+ wavelength + ' nm'+".csv", 'w', newline='') as f:
-#     thewriter=csv.writer(f)
-#     thewriter.writerow(['Normalised weigth L/Lo vs volume fraction'])
-#     thewriter.writerow(['wavelength'])
-#     thewriter.writerow([ wavelength])
-#     thewriter.writerow(['Time', 'I/Io', 'backscattering','pm2.5','PBLH', 'UtxLo'])
-#     for i in range(0,nm):
-#         thewriter.writerow([time[i], weight[i], knight[i], pm[i], boun[i], UtxLo[i]])
-# =============================================================================
