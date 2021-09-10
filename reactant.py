@@ -75,6 +75,7 @@ for g in [0.9] :
         thru=0
         mass=0
         hit=0
+        absorbWeight=0
 
         for i in range(0,itr):
 
@@ -138,6 +139,8 @@ for g in [0.9] :
                 hh=cc*cc - hh
                 hh=pow(hh,0.5)
                 if hh<=sr:
+                    absorbWeight+=w         # Photon weight is absorbed
+                    continue                # Turn for next photon
 
 
             # if it reaches the inlet boundary
@@ -170,6 +173,9 @@ for g in [0.9] :
                 hh=cc*cc - hh
                 hh=pow(hh,0.5)
                 if hh<=sr:
+                    absorbWeight+=w
+                    w=0
+                    continue
 
 
             # While a photon is inside the system boundaries
@@ -229,6 +235,10 @@ for g in [0.9] :
                         hh=cc*cc - hh
                         hh=pow(hh,0.5)
                         if hh<=sr:
+                            absorbWeight+=w   # Recording the absorbed weight
+                            w=0               # Setting photon weight =0
+                            sys=False         # To make photon exit the system
+                            break             # To exit current loop
 
 
                         x=x1
@@ -286,6 +296,10 @@ for g in [0.9] :
                             hh=cc*cc - hh
                             hh=pow(hh,0.5)
                             if hh<=sr:
+                                absorbWeight+=w   # Recording the absorbed weight
+                                w=0               # Setting photon weight =0
+                                sys=False         # To make photon exit the system
+                                break             # To exit current loop
 
 
                             x=x1
@@ -349,8 +363,11 @@ for g in [0.9] :
                         hh=cc*cc - hh
                         hh=pow(hh,0.5)
                         if hh<=sr:
-                            
-                        
+                            absorbWeight+=w   # Recording the absorbed weight
+                            w=0               # Setting photon weight =0
+                            sys=False         # To make photon exit the system
+                            break             # To exit current loop
+
                         z=0
                         xcor.append(x1)
                         zcor.append(z)
@@ -396,7 +413,7 @@ for g in [0.9] :
         file_path.write(str(thru/itr)+"\t")
         file_path.write(str(hit/itr)+"\n")
         file_path.close()"""
-        
+
         file_path = open("wfe rt.txt","a")
         #xval=[]
         #yval=[]
