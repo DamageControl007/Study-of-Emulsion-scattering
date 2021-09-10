@@ -23,7 +23,7 @@ print("START")
 
 
 nm=10                                                                          #Number of hours in a day
-itr=100000                                                                   #number of iterations
+itr=100                                                                   #number of iterations
 
 # System boundaries
 Lx=pow(10,7)
@@ -404,7 +404,7 @@ for g in [0.1] :
                            w=w*m
                        else:
                            w=0
-        print("frequency: ", frequency/itr)
+        #print("frequency: ", frequency/itr)
         file_path = open("absorbWeight.txt","a")
         file_path.write(str(g)+"\t")
         file_path.write(str(Ut)+"\t")
