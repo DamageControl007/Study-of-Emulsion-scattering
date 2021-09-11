@@ -48,6 +48,7 @@ yyy=0
 
 #hit coordinates
 xcor=[]
+ycor=[]
 zcor=[]
 
 
@@ -94,6 +95,7 @@ for g in [0.1] :
             z=0
 
             xcor.append(x)
+            ycor.append(y)
             zcor.append(z)
 
             e=random.uniform(0,1)
@@ -116,8 +118,6 @@ for g in [0.1] :
                 x1=x/z
                 y1=y/z
 
-                xcor.append(x1)
-                zcor.append(Lz)
 
                 xo=0
                 yo=0
@@ -127,6 +127,9 @@ for g in [0.1] :
                 zn=Lz
                 #add here 1
 
+                xcor.append(xn)
+                ycor.append(yn)
+                zcor.append(zn)
 
             # if it reaches the inlet boundary
             elif z<0:
@@ -139,8 +142,6 @@ for g in [0.1] :
                 normPath+=s*w
                 hit+=1
 
-                xcor.append(x)
-                zcor.append(z)
 
                 xo=0
                 yo=0
@@ -150,6 +151,9 @@ for g in [0.1] :
                 zn=z
                 #add here 2
 
+                xcor.append(xn)
+                ycor.append(yn)
+                zcor.append(zn)
 
             # While a photon is inside the system boundaries
             while 0<=z<=Lz and sys and w>0.0005:
@@ -200,14 +204,13 @@ for g in [0.1] :
                         zn=z1
                         #add here 3
 
+                        xcor.append(xn)
+                        ycor.append(yn)
+                        zcor.append(zn)
 
                         x=x1
                         y=y1
                         z=z1
-
-                        xcor.append(x)
-                        zcor.append(z)
-
                         hit+=1
                         w=w*(1-Ua/Ut)
                         path+=s
@@ -248,14 +251,13 @@ for g in [0.1] :
                             zn=Lz
                             #add here 4
 
+                            xcor.append(xn)
+                            ycor.append(yn)
+                            zcor.append(zn)
 
                             x=x1
                             y=y1
                             z=z1
-
-                            xcor.append(x)
-                            zcor.append(z)
-
                             sys=False
                             loop=False
                             decoy=False
@@ -302,9 +304,11 @@ for g in [0.1] :
                         zn=0
                         #add here 5
 
+                        xcor.append(xn)
+                        ycor.append(yn)
+                        zcor.append(zn)
+
                         z=0
-                        xcor.append(x1)
-                        zcor.append(z)
 
                         if abs(x1)>Lx/2 or abs(y1)>Ly/2:
                             sys=False
