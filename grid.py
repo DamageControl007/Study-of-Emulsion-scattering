@@ -56,7 +56,6 @@ def make_grid(df):
 	ty=np.arange(1001)
 	ty=ty/100
 	ty=ty+0.005
-	ty[0]=ty[0]-0.005
 	xx, yy = np.meshgrid(tx,ty)
 
 	plt.contourf(xx,yy,grid)
