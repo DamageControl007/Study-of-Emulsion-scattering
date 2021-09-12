@@ -347,5 +347,6 @@ for g in [0.1] :
                        else:
                            w=0
 
-
+df=pd.DataFrame(np.hstack((xcor,ycor,zcor,wl)))
+print(df)
 print("END")
