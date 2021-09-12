@@ -17,13 +17,13 @@ from matplotlib import cm
 from colorspacious import cspace_converter
 from collections import OrderedDict
 from collections import defaultdict
-
+import grid
 
 print("START")
 
 
 nm=10                                                                          #Number of hours in a day
-itr=100                                                                   #number of iterations
+itr=1000                                                                   #number of iterations
 
 # System boundaries
 Lx=pow(10,7)
@@ -57,7 +57,7 @@ wl=[]
 
 urange = arr.array('d',[10])
 
-for g in [0.1] :
+for g in [0.9] :
     #if g<xxx : continue
     for Ut in urange :
         #if g==xxx and Ut<yyy : continue
@@ -80,7 +80,7 @@ for g in [0.1] :
             Us=Ut*0.95
             Ua=Ut-Us
 
-            if i%1000==0:
+            if i%10==0:
                 print(i*100/itr,"%\tfor g = ",g,"\tfor Ut = ",Ut)
 
             # Initializing direction cosines
@@ -347,6 +347,8 @@ for g in [0.1] :
                        else:
                            w=0
 
-df=pd.DataFrame(np.hstack((xcor,ycor,zcor,wl)))
-print(df)
+df = pd.DataFrame(list(zip(xcor,ycor,zcor,wl)),columns =['xcor','ycor','zcor','wl'])
+grid.make_grid(df)
+
+
 print("END")
