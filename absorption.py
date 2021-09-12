@@ -50,7 +50,7 @@ yyy=0
 xcor=[]
 ycor=[]
 zcor=[]
-
+wl=[]
 
 #0.001,0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.009,0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100
 #-1,-0.5,-0.1,0.1,0.5,0.9,0.99,1
@@ -97,6 +97,7 @@ for g in [0.1] :
             xcor.append(x)
             ycor.append(y)
             zcor.append(z)
+            wl.append(w)
 
             e=random.uniform(0,1)
             s=-np.log(e)/Ut          # Photon step size
@@ -130,6 +131,7 @@ for g in [0.1] :
                 xcor.append(xn)
                 ycor.append(yn)
                 zcor.append(zn)
+                wl.append(w)
 
             # if it reaches the inlet boundary
             elif z<0:
@@ -154,6 +156,7 @@ for g in [0.1] :
                 xcor.append(xn)
                 ycor.append(yn)
                 zcor.append(zn)
+                wl.append(w)
 
             # While a photon is inside the system boundaries
             while 0<=z<=Lz and sys and w>0.0005:
@@ -207,6 +210,7 @@ for g in [0.1] :
                         xcor.append(xn)
                         ycor.append(yn)
                         zcor.append(zn)
+                        wl.append(w)
 
                         x=x1
                         y=y1
@@ -254,6 +258,7 @@ for g in [0.1] :
                             xcor.append(xn)
                             ycor.append(yn)
                             zcor.append(zn)
+                            wl.append(w)
 
                             x=x1
                             y=y1
@@ -307,6 +312,7 @@ for g in [0.1] :
                         xcor.append(xn)
                         ycor.append(yn)
                         zcor.append(zn)
+                        wl.append(w)
 
                         z=0
 
