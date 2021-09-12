@@ -59,3 +59,4 @@ def make_grid(df):
 	xx, yy = np.meshgrid(tx,ty)
 
 	plt.contourf(xx,yy,grid)
+	plt.show()
