@@ -14,6 +14,7 @@ from solarpy import irradiance_on_plane
 import seaborn as sns
 import pandas as pd
 from matplotlib import cm
+from matplotlib import ticker
 from colorspacious import cspace_converter
 from collections import OrderedDict
 from collections import defaultdict
@@ -59,4 +60,5 @@ def make_grid(df):
 	xx, yy = np.meshgrid(tx,ty)
 
 	plt.contourf(xx,yy,grid)
+	plt.axis('equal')
 	plt.show()
