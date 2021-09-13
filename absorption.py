@@ -52,6 +52,20 @@ ycor=[]
 zcor=[]
 wl=[]
 
+#Transperent inert particles interaction coefficient
+Ut1=0.1
+Us1=Ut1
+Ua1=0
+
+# Reactant particles (absorpting component in the mixture)
+Ut2=0.1
+Ua2=Ut2
+Us2=Ut2-Ua2
+
+
+# Total (overall) interaction coefficient
+Ut = Ut1 + Ut2
+
 #0.001,0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.009,0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100
 #-1,-0.5,-0.1,0.1,0.5,0.9,0.99,1
 
@@ -59,7 +73,7 @@ urange = arr.array('d',[10])
 
 for g in [0.9] :
     #if g<xxx : continue
-    for Ut in urange :
+    for Ut1 in urange :
         #if g==xxx and Ut<yyy : continue
 
         #observations
@@ -73,12 +87,9 @@ for g in [0.9] :
         hit=0
         absorbWeight=0
         frequency=0
-
         for i in range(0,itr):
 
             #parameters
-            Us=Ut*0.95
-            Ua=Ut-Us
 
             if i%10==0:
                 print(i*100/itr,"%\tfor g = ",g,"\tfor Ut = ",Ut)
@@ -143,20 +154,26 @@ for g in [0.9] :
                 path+=s
                 normPath+=s*w
                 hit+=1
-
-
                 xo=0
                 yo=0
                 zo=0
                 xn=x
                 yn=y
                 zn=z
+                prob=random.uniform(0,1)
+                if (prob< (Ut2/Ut)){
+                    xcor.append(xn)
+                    ycor.append(yn)
+                    zcor.append(zn)
+                    wl.append(w)
+                    continue
+                }
+
+
+
                 #add here 2
 
-                xcor.append(xn)
-                ycor.append(yn)
-                zcor.append(zn)
-                wl.append(w)
+
 
             # While a photon is inside the system boundaries
             while 0<=z<=Lz and sys and w>0.0005:
@@ -198,7 +215,6 @@ for g in [0.9] :
                     x1=x+s*Ux
                     y1=y+s*Uy
                     if 0<=z1<=Lz:
-
                         xo=x
                         yo=y
                         zo=z
@@ -206,11 +222,15 @@ for g in [0.9] :
                         yn=y1
                         zn=z1
                         #add here 3
-
-                        xcor.append(xn)
-                        ycor.append(yn)
-                        zcor.append(zn)
-                        wl.append(w)
+                        if (prob< (Ut2/Ut)){
+                            xcor.append(xn)
+                            ycor.append(yn)
+                            zcor.append(zn)
+                            wl.append(w)
+                            loop=False
+                            sys=False
+                            break
+                        }
 
                         x=x1
                         y=y1
@@ -254,11 +274,15 @@ for g in [0.9] :
                             yn=y1
                             zn=Lz
                             #add here 4
-
-                            xcor.append(xn)
-                            ycor.append(yn)
-                            zcor.append(zn)
-                            wl.append(w)
+                            if (prob< (Ut2/Ut)){
+                                xcor.append(xn)
+                                ycor.append(yn)
+                                zcor.append(zn)
+                                wl.append(w)
+                                loop=False
+                                sys=False
+                                break
+                            }
 
                             x=x1
                             y=y1
@@ -308,11 +332,15 @@ for g in [0.9] :
                         yn=y1
                         zn=0
                         #add here 5
-
-                        xcor.append(xn)
-                        ycor.append(yn)
-                        zcor.append(zn)
-                        wl.append(w)
+                        if (prob< (Ut2/Ut)){
+                            xcor.append(xn)
+                            ycor.append(yn)
+                            zcor.append(zn)
+                            wl.append(w)
+                            loop=False
+                            sys=False
+                            break
+                        }
 
                         z=0
 
