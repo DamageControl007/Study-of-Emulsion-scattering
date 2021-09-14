@@ -51,6 +51,7 @@ xcor=[]
 ycor=[]
 zcor=[]
 wl=[]
+rl=[]
 
 #Transperent inert particles interaction coefficient
 Ut1=0.1
@@ -166,6 +167,7 @@ for g in [0.9] :
                     ycor.append(yn)
                     zcor.append(zn)
                     wl.append(w)
+                    rl.append(pow(xn*xn+yn*yn,0.5))
                     continue
 
 
@@ -228,6 +230,7 @@ for g in [0.9] :
                             ycor.append(yn)
                             zcor.append(zn)
                             wl.append(w)
+                            rl.append(pow(xn*xn+yn*yn,0.5))
                             loop=False
                             sys=False
                             break
