@@ -104,11 +104,11 @@ for g in [0.9] :
             x=0
             y=0
             z=0
-
+            """
             xcor.append(x)
             ycor.append(y)
             zcor.append(z)
-            wl.append(w)
+            wl.append(w)"""
 
             e=random.uniform(0,1)
             s=-np.log(e)/Ut          # Photon step size
@@ -138,11 +138,11 @@ for g in [0.9] :
                 yn=0
                 zn=Lz
                 #add here 1
-
+                """
                 xcor.append(xn)
                 ycor.append(yn)
                 zcor.append(zn)
-                wl.append(w)
+                wl.append(w)"""
 
             # if it reaches the inlet boundary
             elif z<0:
