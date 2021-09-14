@@ -161,13 +161,13 @@ for g in [0.9] :
                 yn=y
                 zn=z
                 prob=random.uniform(0,1)
-                if (prob< (Ut2/Ut)){
+                if (prob< (Ut2/Ut)):
                     xcor.append(xn)
                     ycor.append(yn)
                     zcor.append(zn)
                     wl.append(w)
                     continue
-                }
+
 
 
 
@@ -222,7 +222,8 @@ for g in [0.9] :
                         yn=y1
                         zn=z1
                         #add here 3
-                        if (prob< (Ut2/Ut)){
+                        prob=random.uniform(0,1)
+                        if (prob< (Ut2/Ut)):
                             xcor.append(xn)
                             ycor.append(yn)
                             zcor.append(zn)
@@ -230,7 +231,7 @@ for g in [0.9] :
                             loop=False
                             sys=False
                             break
-                        }
+
 
                         x=x1
                         y=y1
@@ -274,15 +275,6 @@ for g in [0.9] :
                             yn=y1
                             zn=Lz
                             #add here 4
-                            if (prob< (Ut2/Ut)){
-                                xcor.append(xn)
-                                ycor.append(yn)
-                                zcor.append(zn)
-                                wl.append(w)
-                                loop=False
-                                sys=False
-                                break
-                            }
 
                             x=x1
                             y=y1
@@ -332,15 +324,6 @@ for g in [0.9] :
                         yn=y1
                         zn=0
                         #add here 5
-                        if (prob< (Ut2/Ut)){
-                            xcor.append(xn)
-                            ycor.append(yn)
-                            zcor.append(zn)
-                            wl.append(w)
-                            loop=False
-                            sys=False
-                            break
-                        }
 
                         z=0
 
