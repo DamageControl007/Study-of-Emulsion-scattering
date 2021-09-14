@@ -361,8 +361,11 @@ for g in [0.9] :
                        else:
                            w=0
 
-df = pd.DataFrame(list(zip(xcor,ycor,zcor,wl)),columns =['xcor','ycor','zcor','wl'])
-grid.make_grid(df)
+df = pd.DataFrame(list(zip(xcor,ycor,zcor,wl,rl)),columns =['xcor','ycor','zcor','wl','rl'])
+df1 = pd.DataFrame(list(zip(xcor,ycor,zcor,wl)),columns =['xcor','ycor','zcor','wl'])
+df.to_excel("output_new_new.xlsx")
+print(df.sum(axis=0))
+grid.make_grid(df1)
 
 
 print("END")
