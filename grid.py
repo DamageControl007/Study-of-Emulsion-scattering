@@ -59,7 +59,7 @@ def make_grid(df):
 	ty=ty+0.005
 	xx, yy = np.meshgrid(tx,ty)
 
-	plt.contourf(xx,yy,grid,cmap="jet")
+	plt.contourf(xx,yy,grid,cmap="jet",levels=200)
 	plt.colorbar()
 	#plt.axis('equal')
 	#plt.ylim(0.005,0.02)
