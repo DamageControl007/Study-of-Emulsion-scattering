@@ -237,7 +237,7 @@ for g in [0.9] :
                         y=y1
                         z=z1
                         hit+=1
-                        w=w*(1-Ua/Ut)
+                        w=w*(1-Ua1/Ut1)
                         path+=s
                         normPath+=s*w
                         loop=False
