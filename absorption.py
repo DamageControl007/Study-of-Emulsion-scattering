@@ -23,7 +23,7 @@ print("START")
 
 
 nm=10                                                                          #Number of hours in a day
-itr=1000                                                                   #number of iterations
+itr=1000000                                                                   #number of iterations
 
 # System boundaries
 Lx=pow(10,7)
@@ -54,12 +54,13 @@ wl=[]
 rl=[]
 
 #Transperent inert particles interaction coefficient
-Ut1=0.1
+Ut1=1
+abcd=Ut1
 Us1=Ut1
 Ua1=0
 
 # Reactant particles (absorpting component in the mixture)
-Ut2=0.1
+Ut2=Ut1/10
 Ua2=Ut2
 Us2=Ut2-Ua2
 
@@ -70,11 +71,11 @@ Ut = Ut1 + Ut2
 #0.001,0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.009,0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100
 #-1,-0.5,-0.1,0.1,0.5,0.9,0.99,1
 
-urange = arr.array('d',[10])
+#urange = arr.array('d',[10])
 
 for g in [0.9] :
     #if g<xxx : continue
-    for Ut1 in urange :
+    for Ut1 in [abcd] :
         #if g==xxx and Ut<yyy : continue
 
         #observations
@@ -92,7 +93,7 @@ for g in [0.9] :
 
             #parameters
 
-            if i%10==0:
+            if i%10000==0:
                 print(i*100/itr,"%\tfor g = ",g,"\tfor Ut = ",Ut)
 
             # Initializing direction cosines
@@ -363,7 +364,7 @@ for g in [0.9] :
 
 df = pd.DataFrame(list(zip(xcor,ycor,zcor,wl,rl)),columns =['xcor','ycor','zcor','wl','rl'])
 df1 = pd.DataFrame(list(zip(xcor,ycor,zcor,wl)),columns =['xcor','ycor','zcor','wl'])
-df.to_excel("output_new_new.xlsx")
+df.to_excel("output.xlsx")
 print(df.sum(axis=0))
 grid.make_grid(df1)
 
