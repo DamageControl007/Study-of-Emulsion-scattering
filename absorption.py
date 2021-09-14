@@ -23,7 +23,7 @@ print("START")
 
 
 nm=10                                                                          #Number of hours in a day
-itr=1000000                                                                   #number of iterations
+itr=100000                                                                   #number of iterations
 
 # System boundaries
 Lx=pow(10,7)
@@ -93,7 +93,7 @@ for g in [0.9] :
 
             #parameters
 
-            if i%10000==0:
+            if i%1000==0:
                 print(i*100/itr,"%\tfor g = ",g,"\tfor Ut = ",Ut)
 
             # Initializing direction cosines
@@ -362,10 +362,10 @@ for g in [0.9] :
                        else:
                            w=0
 
-df = pd.DataFrame(list(zip(xcor,ycor,zcor,wl,rl)),columns =['xcor','ycor','zcor','wl','rl'])
+#df = pd.DataFrame(list(zip(xcor,ycor,zcor,wl,rl)),columns =['xcor','ycor','zcor','wl','rl'])
 df1 = pd.DataFrame(list(zip(xcor,ycor,zcor,wl)),columns =['xcor','ycor','zcor','wl'])
-df.to_excel("output.xlsx")
-print(df.sum(axis=0))
+#df.to_excel("output.xlsx")
+print(df1.sum(axis=0))
 grid.make_grid(df1)
 
 
