@@ -54,13 +54,13 @@ wl=[]
 rl=[]
 
 #Transperent inert particles interaction coefficient
-Ut1=1
+Ut1=10
 abcd=Ut1
 Us1=Ut1
 Ua1=0
 
 # Reactant particles (absorpting component in the mixture)
-Ut2=Ut1/10
+Ut2=Ut1/500
 Ua2=Ut2
 Us2=Ut2-Ua2
 
@@ -73,7 +73,7 @@ Ut = Ut1 + Ut2
 
 #urange = arr.array('d',[10])
 
-for g in [0.9] :
+for g in [0.6] :
     #if g<xxx : continue
     for Ut1 in [abcd] :
         #if g==xxx and Ut<yyy : continue
@@ -103,10 +103,12 @@ for g in [0.9] :
             w=1       # photon weight
 
             # initializing coordinates
-            rc=0.1
-            x=random.uniform(-rc,rc)
+            rc=1
+            x=random.uniform(5-rc,5+rc)
             temp=pow(rc*rc-x*x,0.5)
             y=random.uniform(-temp,temp)
+            x=5
+            y=0
             z=0
             """
             xcor.append(x)
@@ -364,9 +366,9 @@ for g in [0.9] :
                        else:
                            w=0
 
-#df = pd.DataFrame(list(zip(xcor,ycor,zcor,wl,rl)),columns =['xcor','ycor','zcor','wl','rl'])
+df = pd.DataFrame(list(zip(xcor,ycor,zcor,wl,rl)),columns =['xcor','ycor','zcor','wl','rl'])
 df1 = pd.DataFrame(list(zip(xcor,ycor,zcor,wl)),columns =['xcor','ycor','zcor','wl'])
-#df.to_excel("output.xlsx")
+df.to_excel("output.xlsx")
 print(df1.sum(axis=0))
 grid.make_grid(df1)
 

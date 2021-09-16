@@ -20,7 +20,7 @@ from collections import OrderedDict
 from collections import defaultdict
 
 def grid_index(x,y,z):
-	
+
 	dv=100
 	r=pow(x*x+y*y,0.5)
 
@@ -28,7 +28,7 @@ def grid_index(x,y,z):
 	zi=(int(z*dv)) + 1
 	if z==0:
 		zi=0
-	
+
 	#r-index
 	ri=(int(r*dv))
 
@@ -38,14 +38,14 @@ def make_grid(df):
 
 	#initializing 2d array
 	grid=np.zeros((1001,102))
-	
+
 	for i in range(len(df)):
 		x=df.loc[i,"xcor"]
 		y=df.loc[i,"ycor"]
 		z=df.loc[i,"zcor"]
 		w=df.loc[i,"wl"]
 		ri,zi=grid_index(x,y,z)
-		
+
 		if ri>1000: continue
 		grid[ri,zi]+=w
 
@@ -59,7 +59,7 @@ def make_grid(df):
 	ty=ty+0.005
 	xx, yy = np.meshgrid(tx,ty)
 
-	plt.contourf(xx,yy,grid,cmap="jet",levels=50)
+	plt.contourf(xx,yy,grid,cmap="jet",levels=100)
 	plt.colorbar()
 	#plt.axis('equal')
 	#plt.ylim(0.005,0.02)
