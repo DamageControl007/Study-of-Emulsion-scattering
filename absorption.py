@@ -103,12 +103,10 @@ for g in [0.6] :
             w=1       # photon weight
 
             # initializing coordinates
-            rc=1
-            x=random.uniform(5-rc,5+rc)
+            rc=0.1
+            x=random.uniform(-rc,rc)
             temp=pow(rc*rc-x*x,0.5)
             y=random.uniform(-temp,temp)
-            x=5
-            y=0
             z=0
             """
             xcor.append(x)
