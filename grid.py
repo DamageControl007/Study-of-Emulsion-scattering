@@ -37,7 +37,7 @@ def grid_index(x,y,z):
 def make_grid(df):
 
 	#initializing 2d array
-	grid=np.zeros((101,102))
+	grid=np.zeros((1001,102))
 	
 	for i in range(len(df)):
 		x=df.loc[i,"xcor"]
@@ -46,7 +46,7 @@ def make_grid(df):
 		w=df.loc[i,"wl"]
 		ri,zi=grid_index(x,y,z)
 		
-		if ri>100: continue
+		if ri>1000: continue
 		grid[ri,zi]+=w
 
 	#making meshgrid
@@ -54,12 +54,12 @@ def make_grid(df):
 	tx=tx-1
 	tx=tx/100
 	tx=tx+0.005
-	ty=np.arange(101)
+	ty=np.arange(1001)
 	ty=ty/100
 	ty=ty+0.005
 	xx, yy = np.meshgrid(tx,ty)
 
-	plt.contourf(xx,yy,grid,cmap="jet",levels=200)
+	plt.contourf(xx,yy,grid,cmap="jet",levels=50)
 	plt.colorbar()
 	#plt.axis('equal')
 	#plt.ylim(0.005,0.02)
