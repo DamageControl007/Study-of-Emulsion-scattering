@@ -54,13 +54,13 @@ wl=[]
 rl=[]
 
 #Transperent inert particles interaction coefficient
-Ut1=10
+Ut1=1
 abcd=Ut1
 Us1=Ut1
 Ua1=0
 
 # Reactant particles (absorpting component in the mixture)
-Ut2=Ut1/500
+Ut2=Ut1/10
 Ua2=Ut2
 Us2=Ut2-Ua2
 
@@ -73,7 +73,7 @@ Ut = Ut1 + Ut2
 
 #urange = arr.array('d',[10])
 
-for g in [0.6] :
+for g in [0.3] :
     #if g<xxx : continue
     for Ut1 in [abcd] :
         #if g==xxx and Ut<yyy : continue
@@ -103,10 +103,12 @@ for g in [0.6] :
             w=1       # photon weight
 
             # initializing coordinates
-            rc=0.1
-            x=random.uniform(-rc,rc)
-            temp=pow(rc*rc-x*x,0.5)
-            y=random.uniform(-temp,temp)
+            # rc=0.1
+            # x=random.uniform(-rc,rc)
+            # temp=pow(rc*rc-x*x,0.5)
+            # y=random.uniform(-temp,temp)
+            x=0
+            y=0
             z=0
             """
             xcor.append(x)
