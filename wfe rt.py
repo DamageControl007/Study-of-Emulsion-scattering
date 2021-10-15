@@ -560,13 +560,16 @@ for g in [0.9] :
         del dic[0]
         #file_path.write("\ng="+str(g)+"\t")
         #file_path.write("Ut="+str(Ut)+"\n\n")
+        totalWeightAbsorbed=0
         for key in dic:
-            dic[key] = dic[key]*dv/itr
+            totalWeightAbosrbed+=dic[key]
+            dic[key] = dic[key]/itr
             xval.append(key)
             #file_path.write(str(key)+"\t")
             yval.append(dic[key])
             #file_path.write(str(dic[key])+"\n")
         #file_path.close()
+        print(totalWeightAbosrbed/itr)
 #file_path.close()
 #print(dic)
 
