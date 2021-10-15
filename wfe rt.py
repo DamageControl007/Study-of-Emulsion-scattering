@@ -51,14 +51,15 @@ xcor=[]
 zcor=[]
 
 dv=100
+bta=0.01
 
 #0.001,0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.009,0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100
 #-1,-0.5,-0.1,0.1,0.5,0.9,0.99,1
 
 urange = arr.array('d',[10])
 
-for g in [0.9,0.5,0.1,-0.1,-0.5,-1] :
-    #if g<xxx : continue
+for g in [0.9] :
+    if g<xxx : continue
     for Ut in urange :
         if g==xxx and Ut<yyy : continue
 
@@ -77,7 +78,7 @@ for g in [0.9,0.5,0.1,-0.1,-0.5,-1] :
         for i in range(0,itr):
 
             #parameters
-            Us=Ut*0.95
+            Us=Ut
             Ua=Ut-Us
 
             if i%1000==0:
@@ -124,23 +125,27 @@ for g in [0.9,0.5,0.1,-0.1,-0.5,-1] :
                 zn=Lz
                 dor=abs(zn-zo)  #distance without scattering
                 dnw=abs(s-d)
-                dnw=dnw*w
                 if zo==zn:
                     temp=(int(zo*dv))/dv
-                    dic[temp]+=dnw
+                    dic[temp]+=w*(1-pow(2.718,-bta*dnw))
+                    w=w*pow(2.718,-bta*dnw)
                 if zn>zo:
                     temp=(int(zo*dv))/dv
                     while temp<=zn :
                         if temp+(1/dv)>zn:
                             if temp>=zo:
-                                dic[temp]+=(zn-temp)*dnw/dor
+                                dic[temp]+=w*(1-pow(2.718,-bta*((zn-temp)*dnw/dor)))
+                                w=w*pow(2.718,-bta*((zn-temp)*dnw/dor))
                             else :
-                                dic[temp]+=(zn-zo)*dnw/dor
+                                dic[temp]+=w*(1-pow(2.718,-bta*((zn-zo)*dnw/dor)))
+                                w=w*pow(2.718,-bta*((zn-zo)*dnw/dor))
                         else:
                             if temp>=zo:
-                                dic[temp]+=(1/dv)*dnw/dor
+                                dic[temp]+=w*(1-pow(2.718,-bta*((1/dv)*dnw/dor)))
+                                w=w*pow(2.718,-bta*((1/dv)*dnw/dor))
                             else :
-                                dic[temp]+=(temp+(1/dv)-zo)*dnw/dor
+                                dic[temp]+=w*(1-pow(2.718,-bta*((temp+(1/dv)-zo)*dnw/dor)))
+                                w=w*pow(2.718,-bta*((temp+(1/dv)-zo)*dnw/dor))
                         temp=temp+(1/dv)
                         temp=(int((temp+(0.01/dv))*dv))/dv
                 if zn<zo:
@@ -148,14 +153,18 @@ for g in [0.9,0.5,0.1,-0.1,-0.5,-1] :
                     while temp+(1/dv)>=zn:
                         if temp+(1/dv)>zo:
                             if temp<=zn:
-                                dic[temp]+=(zo-zn)*dnw/dor
+                                dic[temp]+=w*(1-pow(2.718,-bta*((zo-zn)*dnw/dor)))
+                                w=w*pow(2.718,-bta*((zo-zn)*dnw/dor))
                             else:
-                                dic[temp]+=(zo-temp)*dnw/dor
+                                dic[temp]+=w*(1-pow(2.718,-bta*((zo-temp)*dnw/dor)))
+                                w=w*pow(2.718,-bta*((zo-temp)*dnw/dor))
                         else:
                             if temp<zn:
-                                dic[temp]+=(temp+(1/dv)-zn)*dnw/dor
+                                dic[temp]+=w*(1-pow(2.718,-bta*((temp+(1/dv)-zn)*dnw/dor)))
+                                w=w*pow(2.718,-bta*((temp+(1/dv)-zn)*dnw/dor))
                             else:
-                                dic[temp]+=(1/dv)*dnw/dor
+                                dic[temp]+=w*(1-pow(2.718,-bta*((1/dv)*dnw/dor)))
+                                w=w*pow(2.718,-bta*((1/dv)*dnw/dor))
                         temp=temp-(1/dv)
                         temp=(int((temp+(0.01/dv))*dv))/dv
                         if temp==0:
@@ -179,23 +188,27 @@ for g in [0.9,0.5,0.1,-0.1,-0.5,-1] :
                 zn=z
                 dor=abs(zn-zo)  #distance without scattering
                 dnw=abs(s)
-                dnw=dnw*w
                 if zo==zn:
                     temp=(int(zo*dv))/dv
-                    dic[temp]+=dnw
+                    dic[temp]+=w*(1-pow(2.718,-bta*dnw))
+                    w=w*pow(2.718,-bta*dnw)
                 if zn>zo:
                     temp=(int(zo*dv))/dv
                     while temp<=zn :
                         if temp+(1/dv)>zn:
                             if temp>=zo:
-                                dic[temp] += (zn-temp)*dnw/dor
+                                dic[temp]+=w*(1-pow(2.718,-bta*((zn-temp)*dnw/dor)))
+                                w=w*pow(2.718,-bta*((zn-temp)*dnw/dor))
                             else :
-                                dic[temp] += (zn-zo)*dnw/dor
+                                dic[temp]+=w*(1-pow(2.718,-bta*((zn-zo)*dnw/dor)))
+                                w=w*pow(2.718,-bta*((zn-zo)*dnw/dor))
                         else:
                             if temp>=zo:
-                                dic[temp] += (1/dv)*dnw/dor
+                                dic[temp]+=w*(1-pow(2.718,-bta*((1/dv)*dnw/dor)))
+                                w=w*pow(2.718,-bta*((1/dv)*dnw/dor))
                             else :
-                                dic[temp] += (temp+(1/dv)-zo)*dnw/dor
+                                dic[temp]+=w*(1-pow(2.718,-bta*((temp+(1/dv)-zo)*dnw/dor)))
+                                w=w*pow(2.718,-bta*((temp+(1/dv)-zo)*dnw/dor))
                         temp=temp+(1/dv)
                         temp=(int((temp+(0.01/dv))*dv))/dv
                 if zn<zo:
@@ -203,14 +216,18 @@ for g in [0.9,0.5,0.1,-0.1,-0.5,-1] :
                     while temp+(1/dv)>=zn:
                         if temp+(1/dv)>zo:
                             if temp<=zn:
-                                dic[temp]+=(zo-zn)*dnw/dor
+                                dic[temp]+=w*(1-pow(2.718,-bta*((zo-zn)*dnw/dor)))
+                                w=w*pow(2.718,-bta*((zo-zn)*dnw/dor))
                             else:
-                                dic[temp]+=(zo-temp)*dnw/dor
+                                dic[temp]+=w*(1-pow(2.718,-bta*((zo-temp)*dnw/dor)))
+                                w=w*pow(2.718,-bta*((zo-temp)*dnw/dor))
                         else:
                             if temp<zn:
-                                dic[temp]+=(temp+(1/dv)-zn)*dnw/dor
+                                dic[temp]+=w*(1-pow(2.718,-bta*((temp+(1/dv)-zn)*dnw/dor)))
+                                w=w*pow(2.718,-bta*((temp+(1/dv)-zn)*dnw/dor))
                             else:
-                                dic[temp]+=(1/dv)*dnw/dor
+                                dic[temp]+=w*(1-pow(2.718,-bta*((1/dv)*dnw/dor)))
+                                w=w*pow(2.718,-bta*((1/dv)*dnw/dor))
                         temp=temp-(1/dv)
                         temp=(int((temp+(0.01/dv))*dv))/dv
                         if temp==0:
@@ -261,23 +278,27 @@ for g in [0.9,0.5,0.1,-0.1,-0.5,-1] :
                         zn=z1
                         dor=abs(zn-zo)  #distance without scattering
                         dnw=abs(s)
-                        dnw=dnw*w
                         if zo==zn:
                             temp=(int(zo*dv))/dv
-                            dic[temp]+=dnw
+                            dic[temp]+=w*(1-pow(2.718,-bta*dnw))
+                            w=w*pow(2.718,-bta*dnw)
                         if zn>zo:
                             temp=(int(zo*dv))/dv
                             while temp<=zn :
                                 if temp+(1/dv)>zn:
                                     if temp>=zo:
-                                        dic[temp]+=(zn-temp)*dnw/dor
+                                        dic[temp]+=w*(1-pow(2.718,-bta*((zn-temp)*dnw/dor)))
+                                        w=w*pow(2.718,-bta*((zn-temp)*dnw/dor))
                                     else :
-                                        dic[temp]+=(zn-zo)*dnw/dor
+                                        dic[temp]+=w*(1-pow(2.718,-bta*((zn-zo)*dnw/dor)))
+                                        w=w*pow(2.718,-bta*((zn-zo)*dnw/dor))
                                 else:
                                     if temp>=zo:
-                                        dic[temp]+=(1/dv)*dnw/dor
+                                        dic[temp]+=w*(1-pow(2.718,-bta*((1/dv)*dnw/dor)))
+                                        w=w*pow(2.718,-bta*((1/dv)*dnw/dor))
                                     else :
-                                        dic[temp]+=(temp+(1/dv)-zo)*dnw/dor
+                                        dic[temp]+=w*(1-pow(2.718,-bta*((temp+(1/dv)-zo)*dnw/dor)))
+                                        w=w*pow(2.718,-bta*((temp+(1/dv)-zo)*dnw/dor))
                                 temp=temp+(1/dv)
                                 temp=(int((temp+(0.01/dv))*dv))/dv
                         if zn<zo:
@@ -285,14 +306,18 @@ for g in [0.9,0.5,0.1,-0.1,-0.5,-1] :
                             while temp+(1/dv)>=zn:
                                 if temp+(1/dv)>zo:
                                     if temp<=zn:
-                                        dic[temp]+=(zo-zn)*dnw/dor
+                                        dic[temp]+=w*(1-pow(2.718,-bta*((zo-zn)*dnw/dor)))
+                                        w=w*pow(2.718,-bta*((zo-zn)*dnw/dor))
                                     else:
-                                        dic[temp]+=(zo-temp)*dnw/dor
+                                        dic[temp]+=w*(1-pow(2.718,-bta*((zo-temp)*dnw/dor)))
+                                        w=w*pow(2.718,-bta*((zo-temp)*dnw/dor))
                                 else:
                                     if temp<zn:
-                                        dic[temp]+=(temp+(1/dv)-zn)*dnw/dor
+                                        dic[temp]+=w*(1-pow(2.718,-bta*((temp+(1/dv)-zn)*dnw/dor)))
+                                        w=w*pow(2.718,-bta*((temp+(1/dv)-zn)*dnw/dor))
                                     else:
-                                        dic[temp]+=(1/dv)*dnw/dor
+                                        dic[temp]+=w*(1-pow(2.718,-bta*((1/dv)*dnw/dor)))
+                                        w=w*pow(2.718,-bta*((1/dv)*dnw/dor))
                                 temp=temp-(1/dv)
                                 temp=(int((temp+(0.01/dv))*dv))/dv
                                 if temp==0:
@@ -341,23 +366,27 @@ for g in [0.9,0.5,0.1,-0.1,-0.5,-1] :
                             zn=Lz
                             dor=abs(zn-zo)  #distance without scattering
                             dnw=abs(d)
-                            dnw=dnw*w
                             if zo==zn:
                                 temp=(int(zo*dv))/dv
-                                dic[temp]+=dnw
+                                dic[temp]+=w*(1-pow(2.718,-bta*dnw))
+                                w=w*pow(2.718,-bta*dnw)
                             if zn>zo:
                                 temp=(int(zo*dv))/dv
                                 while temp<=zn :
                                     if temp+(1/dv)>zn:
                                         if temp>=zo:
-                                            dic[temp]+=(zn-temp)*dnw/dor
+                                            dic[temp]+=w*(1-pow(2.718,-bta*((zn-temp)*dnw/dor)))
+                                            w=w*pow(2.718,-bta*((zn-temp)*dnw/dor))
                                         else :
-                                            dic[temp]+=(zn-zo)*dnw/dor
+                                            dic[temp]+=w*(1-pow(2.718,-bta*((zn-zo)*dnw/dor)))
+                                            w=w*pow(2.718,-bta*((zn-zo)*dnw/dor))
                                     else:
                                         if temp>=zo:
-                                            dic[temp]+=(1/dv)*dnw/dor
+                                            dic[temp]+=w*(1-pow(2.718,-bta*((1/dv)*dnw/dor)))
+                                            w=w*pow(2.718,-bta*((1/dv)*dnw/dor))
                                         else :
-                                            dic[temp]+=(temp+(1/dv)-zo)*dnw/dor
+                                            dic[temp]+=w*(1-pow(2.718,-bta*((temp+(1/dv)-zo)*dnw/dor)))
+                                            w=w*pow(2.718,-bta*((temp+(1/dv)-zo)*dnw/dor))
                                     temp=temp+(1/dv)
                                     temp=(int((temp+(0.01/dv))*dv))/dv
                             if zn<zo:
@@ -365,14 +394,18 @@ for g in [0.9,0.5,0.1,-0.1,-0.5,-1] :
                                 while temp+(1/dv)>=zn:
                                     if temp+(1/dv)>zo:
                                         if temp<=zn:
-                                            dic[temp]+=(zo-zn)*dnw/dor
+                                            dic[temp]+=w*(1-pow(2.718,-bta*((zo-zn)*dnw/dor)))
+                                            w=w*pow(2.718,-bta*((zo-zn)*dnw/dor))
                                         else:
-                                            dic[temp]+=(zo-temp)*dnw/dor
+                                            dic[temp]+=w*(1-pow(2.718,-bta*((zo-temp)*dnw/dor)))
+                                            w=w*pow(2.718,-bta*((zo-temp)*dnw/dor))
                                     else:
                                         if temp<zn:
-                                            dic[temp]+=(temp+(1/dv)-zn)*dnw/dor
+                                            dic[temp]+=w*(1-pow(2.718,-bta*((temp+(1/dv)-zn)*dnw/dor)))
+                                            w=w*pow(2.718,-bta*((temp+(1/dv)-zn)*dnw/dor))
                                         else:
-                                            dic[temp]+=(1/dv)*dnw/dor
+                                            dic[temp]+=w*(1-pow(2.718,-bta*((1/dv)*dnw/dor)))
+                                            w=w*pow(2.718,-bta*((1/dv)*dnw/dor))
                                     temp=temp-(1/dv)
                                     temp=(int((temp+(0.01/dv))*dv))/dv
                                     if temp==0:
@@ -423,23 +456,27 @@ for g in [0.9,0.5,0.1,-0.1,-0.5,-1] :
                         d=abs(z/Uz)
                         dor=abs(zn-zo)  #distance without scattering
                         dnw=abs(d)
-                        dnw=dnw*w
                         if zo==zn:
                             temp=(int(zo*dv))/dv
-                            dic[temp]+=dnw
+                            dic[temp]+=w*(1-pow(2.718,-bta*dnw))
+                            w=w*pow(2.718,-bta*dnw)
                         if zn>zo:
                             temp=(int(zo*dv))/dv
                             while temp<=zn :
                                 if temp+(1/dv)>zn:
                                     if temp>=zo:
-                                        dic[temp]+=(zn-temp)*dnw/dor
+                                        dic[temp]+=w*(1-pow(2.718,-bta*((zn-temp)*dnw/dor)))
+                                        w=w*pow(2.718,-bta*((zn-temp)*dnw/dor))
                                     else :
-                                        dic[temp]+=(zn-zo)*dnw/dor
+                                        dic[temp]+=w*(1-pow(2.718,-bta*((zn-zo)*dnw/dor)))
+                                        w=w*pow(2.718,-bta*((zn-zo)*dnw/dor))
                                 else:
                                     if temp>=zo:
-                                        dic[temp]+=(1/dv)*dnw/dor
+                                        dic[temp]+=w*(1-pow(2.718,-bta*((1/dv)*dnw/dor)))
+                                        w=w*pow(2.718,-bta*((1/dv)*dnw/dor))
                                     else :
-                                        dic[temp]+=(temp+(1/dv)-zo)*dnw/dor
+                                        dic[temp]+=w*(1-pow(2.718,-bta*((temp+(1/dv)-zo)*dnw/dor)))
+                                        w=w*pow(2.718,-bta*((temp+(1/dv)-zo)*dnw/dor))
                                 temp=temp+(1/dv)
                                 temp=(int((temp+(0.01/dv))*dv))/dv
                         if zn<zo:
@@ -447,14 +484,18 @@ for g in [0.9,0.5,0.1,-0.1,-0.5,-1] :
                             while temp+(1/dv)>=zn:
                                 if temp+(1/dv)>zo:
                                     if temp<=zn:
-                                        dic[temp]+=(zo-zn)*dnw/dor
+                                        dic[temp]+=w*(1-pow(2.718,-bta*((zo-zn)*dnw/dor)))
+                                        w=w*pow(2.718,-bta*((zo-zn)*dnw/dor))
                                     else:
-                                        dic[temp]+=(zo-temp)*dnw/dor
+                                        dic[temp]+=w*(1-pow(2.718,-bta*((zo-temp)*dnw/dor)))
+                                        w=w*pow(2.718,-bta*((zo-temp)*dnw/dor))
                                 else:
                                     if temp<zn:
-                                        dic[temp]+=(temp+(1/dv)-zn)*dnw/dor
+                                        dic[temp]+=w*(1-pow(2.718,-bta*((temp+(1/dv)-zn)*dnw/dor)))
+                                        w=w*pow(2.718,-bta*((temp+(1/dv)-zn)*dnw/dor))
                                     else:
-                                        dic[temp]+=(1/dv)*dnw/dor
+                                        dic[temp]+=w*(1-pow(2.718,-bta*((1/dv)*dnw/dor)))
+                                        w=w*pow(2.718,-bta*((1/dv)*dnw/dor))
                                 temp=temp-(1/dv)
                                 temp=(int((temp+(0.01/dv))*dv))/dv
                                 if temp==0:
@@ -512,26 +553,26 @@ for g in [0.9,0.5,0.1,-0.1,-0.5,-1] :
         file_path.write(str(hit/itr)+"\n")
         file_path.close()"""
         
-        file_path = open("wfe rt.txt","a")
-        #xval=[]
-        #yval=[]
-        #del dic[1]
-        #del dic[0]
-        file_path.write("\ng="+str(g)+"\t")
-        file_path.write("Ut="+str(Ut)+"\n\n")
+        #file_path = open("wfe rt.txt","a")
+        xval=[]
+        yval=[]
+        del dic[1]
+        del dic[0]
+        #file_path.write("\ng="+str(g)+"\t")
+        #file_path.write("Ut="+str(Ut)+"\n\n")
         for key in dic:
             dic[key] = dic[key]*dv/itr
-            #xval.append(key)
-            file_path.write(str(key)+"\t")
-            #yval.append(dic[key])
-            file_path.write(str(dic[key])+"\n")
-        file_path.close()
+            xval.append(key)
+            #file_path.write(str(key)+"\t")
+            yval.append(dic[key])
+            #file_path.write(str(dic[key])+"\n")
+        #file_path.close()
 #file_path.close()
 #print(dic)
 
 #print(xval)
 #print(yval)
-#plt.plot(xval,yval)
+plt.plot(xval,yval)
 #plt.bar(*zip(*dic.items()))
 #df = pd.DataFrame(list(zip(xcor,zcor)),columns=['xcor','zcor'])
 #print(df)
@@ -572,7 +613,7 @@ with file_path as f:
 #plt.subplot(122)
 #plt.plot(df['zcor'],df['xcor'],marker=".")
 #plt.legend()
-#plt.show()
+plt.show()
 #print(dic)
 
 print("END")
