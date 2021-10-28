@@ -100,6 +100,12 @@ def xip(x1,x2,dnw):
             if temp==0:
                 break;
 
+def next_point(x, y, z, Ux, Uy, Uz, s):
+    x=x+Ux*s
+    y=y+Uy*s
+    z=z+Uz*s
+    return x,y,z
+
 def update(z1,z2,x1,x2,dnw,wo):
 	s=min(zip(z1,z2,dnw),xip(x1,x2,dnw))
 	wn=wo*(pow(2.718,beta*s)) #weight update
