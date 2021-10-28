@@ -18,11 +18,12 @@ from colorspacious import cspace_converter
 from collections import OrderedDict
 from collections import defaultdict
 
+dv=100
+
 def zip(z1,z2,dnw):
-	zo=0 #z1
-    zn=Lz #z2
+	zo=z1 #z1
+    zn=z2 #z2
     dor=abs(zn-zo)
-    dnw=abs(s-d) #input
     if zo==zn:
         temp=(int(zo*dv))/dv
         return dnw
@@ -63,7 +64,6 @@ def xip(x1,x2,dnw):
 	zo=x1
     zn=x2
     dor=abs(zn-zo)  #distance without scattering
-    dnw=abs(s-d) #input
     if zo==zn:
         temp=(int(zo*dv))/dv
         return dnw
@@ -106,6 +106,10 @@ def next_point(x, y, z, Ux, Uy, Uz, s):
     z=z+Uz*s
     return x,y,z
 
+xcor=[]
+zcor=[]
+wl=[]
+
 def update(z1,z2,x1,x2,dnw,wo,Ux,Uy,Uz):
 	s=min(zip(z1,z2,dnw),xip(x1,x2,dnw))
 	wn=wo*(pow(2.718,beta*s))
@@ -119,5 +123,7 @@ def update(z1,z2,x1,x2,dnw,wo,Ux,Uy,Uz):
 
 def insert(xo,yo,zo,Ux,Uy,Uz,xn,yn,zn,w,dnw):
 
-    while():
+    while(dnw<0.00001):
         zon,xon,dnw,wn=update(zo,zn,xo,xn,dnw,w)
+        zo,xo,dnw,w=zon,xon,dnw,wn
+
