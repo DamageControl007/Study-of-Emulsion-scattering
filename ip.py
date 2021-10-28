@@ -19,6 +19,8 @@ from collections import OrderedDict
 from collections import defaultdict
 import new_grid
 
+print("START")
+
 dv=100
 
 def zip(z1,z2,dnw):
@@ -97,3 +99,5 @@ new_grid.make_grid(df)
 #testing---------------------------------
 
 insert(0,0,0,0,0,1,0,0,1,1,1)
+
+print("END")
