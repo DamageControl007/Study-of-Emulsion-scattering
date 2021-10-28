@@ -70,6 +70,8 @@ xcor=[]
 zcor=[]
 wl=[]
 
+beta=?
+
 def update(z1,z2,x1,x2,dnw,wo,Ux,Uy,Uz):
 	s=min(zip(z1,z2,dnw),zip(x1,x2,dnw))
 	wn=wo*(pow(2.718,beta*s))
