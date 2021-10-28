@@ -60,46 +60,6 @@ def zip(z1,z2,dnw):
             if temp==0:
                 break;
 
-def xip(x1,x2,dnw):
-	zo=x1
-    zn=x2
-    dor=abs(zn-zo)  #distance without scattering
-    if zo==zn:
-        temp=(int(zo*dv))/dv
-        return dnw
-    if zn>zo:
-        temp=(int(zo*dv))/dv
-        while temp<=zn :
-            if temp+(1/dv)>zn:
-                if temp>=zo:
-                    return (zn-temp)*dnw/dor
-                else :
-                    return (zn-zo)*dnw/dor
-            else:
-                if temp>=zo:
-                    return (1/dv)*dnw/dor
-                else :
-                    return (temp+(1/dv)-zo)*dnw/dor
-            temp=temp+(1/dv)
-            temp=(int((temp+(0.01/dv))*dv))/dv
-    if zn<zo:
-        temp=(int(zo*dv))/dv
-        while temp+(1/dv)>=zn:
-            if temp+(1/dv)>zo:
-                if temp<=zn:
-                    return (zo-zn)*dnw/dor
-                else:
-                    return (zo-temp)*dnw/dor
-            else:
-                if temp<zn:
-                    return (temp+(1/dv)-zn)*dnw/dor
-                else:
-                    return (1/dv)*dnw/dor
-            temp=temp-(1/dv)
-            temp=(int((temp+(0.01/dv))*dv))/dv
-            if temp==0:
-                break;
-
 def next_point(x, y, z, Ux, Uy, Uz, s):
     x=x+Ux*s
     y=y+Uy*s
@@ -111,7 +71,7 @@ zcor=[]
 wl=[]
 
 def update(z1,z2,x1,x2,dnw,wo,Ux,Uy,Uz):
-	s=min(zip(z1,z2,dnw),xip(x1,x2,dnw))
+	s=min(zip(z1,z2,dnw),zip(x1,x2,dnw))
 	wn=wo*(pow(2.718,beta*s))
 	xm,ym,zm=next_point(x1,y1,z1,Ux,Uy,Uz,s/2)
     xcor.append(xm)
@@ -122,7 +82,6 @@ def update(z1,z2,x1,x2,dnw,wo,Ux,Uy,Uz):
     return z1n,x1n,dnw,wn
 
 def insert(xo,yo,zo,Ux,Uy,Uz,xn,yn,zn,w,dnw):
-
     while(dnw<0.00001):
         zon,xon,dnw,wn=update(zo,zn,xo,xn,dnw,w)
         zo,xo,dnw,w=zon,xon,dnw,wn
