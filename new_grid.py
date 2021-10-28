@@ -36,7 +36,7 @@ def grid_index(x,z):
 def make_grid(df):
 
 	#initializing 2d array
-	grid=np.zeros((1001,102))
+	grid=np.zeros((1000,102))
 
 	for i in range(len(df)):
 		x=df.loc[i,"xcor"]
