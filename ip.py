@@ -17,6 +17,7 @@ from matplotlib import cm
 from colorspacious import cspace_converter
 from collections import OrderedDict
 from collections import defaultdict
+import new_grid
 
 dv=100
 
