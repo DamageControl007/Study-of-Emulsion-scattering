@@ -127,3 +127,5 @@ def insert(xo,yo,zo,Ux,Uy,Uz,xn,yn,zn,w,dnw):
         zon,xon,dnw,wn=update(zo,zn,xo,xn,dnw,w)
         zo,xo,dnw,w=zon,xon,dnw,wn
 
+df = pd.DataFrame(list(zip(xcor,zcor,wl)),columns =['xcor','zcor','wl'])
+grid.make_grid(df1)
