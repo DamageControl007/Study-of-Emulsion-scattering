@@ -22,8 +22,8 @@ import new_grid
 dv=100
 
 def zip(z1,z2,dnw):
-	zo=z1 #z1
-    zn=z2 #z2
+    zo=z1
+    zn=z2
     dor=abs(zn-zo)
     if zo==zn:
         temp=(int(zo*dv))/dv
@@ -71,17 +71,17 @@ xcor=[]
 zcor=[]
 wl=[]
 
-beta=?
+beta=0.01
 
 def update(z1,z2,x1,x2,dnw,wo,Ux,Uy,Uz):
-	s=min(zip(z1,z2,dnw),zip(x1,x2,dnw))
-	wn=wo*(pow(2.718,beta*s))
-	xm,ym,zm=next_point(x1,y1,z1,Ux,Uy,Uz,s/2)
+    s=min(zip(z1,z2,dnw),zip(x1,x2,dnw))
+    wn=wo*(pow(2.718,beta*s))
+    xm,ym,zm=next_point(x1,y1,z1,Ux,Uy,Uz,s/2)
     xcor.append(xm)
     zcor.append(zm)
     wl.append(wo-wn)
-	x1n,y1n,z1n=next_point(x1,y1,z1,Ux,Uy,Uz,s)
-	dnw=dnw-s
+    x1n,y1n,z1n=next_point(x1,y1,z1,Ux,Uy,Uz,s)
+    dnw=dnw-s
     return z1n,x1n,dnw,wn
 
 def insert(xo,yo,zo,Ux,Uy,Uz,xn,yn,zn,w,dnw):
