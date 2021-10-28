@@ -91,4 +91,4 @@ def insert(xo,yo,zo,Ux,Uy,Uz,xn,yn,zn,w,dnw):
     return w
 
 df = pd.DataFrame(list(zip(xcor,zcor,wl)),columns =['xcor','zcor','wl'])
-grid.make_grid(df1)
+new_grid.make_grid(df)
