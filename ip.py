@@ -23,7 +23,7 @@ print("START")
 
 dv=100
 
-def zip(z1,z2,dnw):
+def zipo(z1,z2,dnw):
     zo=z1
     zn=z2
     dor=abs(zn-zo)
@@ -76,7 +76,7 @@ wl=[]
 beta=0.01
 
 def update(z1,z2,x1,x2,dnw,wo,Ux,Uy,Uz):
-    s=min(zip(z1,z2,dnw),zip(x1,x2,dnw))
+    s=min(zipo(z1,z2,dnw),zipo(x1,x2,dnw))
     wn=wo*(pow(2.718,beta*s))
     xm,ym,zm=next_point(x1,y1,z1,Ux,Uy,Uz,s/2)
     xcor.append(xm)
@@ -88,7 +88,7 @@ def update(z1,z2,x1,x2,dnw,wo,Ux,Uy,Uz):
 
 def insert(xo,yo,zo,Ux,Uy,Uz,xn,yn,zn,w,dnw):
     while(dnw<0.00001):
-        zon,xon,dnw,wn=update(zo,zn,xo,xn,dnw,w)
+        zon,xon,dnw,wn=update(zo,zn,xo,xn,dnw,w,Ux,Uy,Uz)
         zo,xo,dnw,w=zon,xon,dnw,wn
 
     return w
