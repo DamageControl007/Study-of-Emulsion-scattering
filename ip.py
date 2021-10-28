@@ -109,7 +109,7 @@ def next_point(x, y, z, Ux, Uy, Uz, s):
 def update(z1,z2,x1,x2,dnw,wo):
 	s=min(zip(z1,z2,dnw),xip(x1,x2,dnw))
 	wn=wo*(pow(2.718,beta*s)) #weight update
-	#point inside grid, 
+	xm,ym,zm=next_point(x1,y1,z1,Ux,Uy,Uz,s/2) #point inside grid, 
 	#add energy to grid
 	#new point, z1n,x1n
 	dnw=dnw-s
