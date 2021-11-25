@@ -6,6 +6,7 @@ Created on Tue Apr  6 14:21:14 2021
 @author: Somendra Singh Jadon
 """
 import numpy as np
+import math
 import random
 import matplotlib.pyplot as plt
 import miepython as mp
@@ -19,11 +20,11 @@ import datetime
 from solarpy import irradiance_on_plane
 
 nm=10                                                                          #Number of hours in a day
-itr=10000000                                                                   #number of iterations
+itr=100000                                                                   #number of iterations
 
 
 # Monte carlo paramters
-Ut=0.2
+Ut=1
 Us=Ut*1
 Ua=Ut-Us
 g=0.81
@@ -36,6 +37,7 @@ Lz=1
 # refractive index of particles and medium (water)
 M_re=1.5837
 N_re=1.33
+beta=858
 
 
 IntensityLoss=0.05         # Fraction of intensity loss while exiting the system by a photon
@@ -48,6 +50,7 @@ back=0
 thru=0
 mass=0
 hit=0
+absorbed_path=0
 
 # sensor coordinates
 
@@ -87,6 +90,8 @@ for i in range(0,itr):
         thru+=1
         front+=1
         mass+=w
+        w=w*math.exp(-beta*Lz)
+        absorbed_path+=Lz*w
     
     # if it reaches the inlet boundary
     elif z<0:
@@ -96,6 +101,8 @@ for i in range(0,itr):
     # if it undergoes scattering
     else:
         hit+=1
+        w=w*math.exp(-beta*s)
+        absorbed_path+=w*s
         
     # While a photon is inside the system boundaries
     while 0<=z<=Lz and sys and w>0.0005:
@@ -142,6 +149,8 @@ for i in range(0,itr):
                 z=z1
                 hit+=1
                 w=w*(1-Ua/Ut) 
+                w=w*math.exp(-beta*s)
+                absorbed_path+=w*s
                 path+=s
                 break
             elif z1>Lz:
@@ -150,6 +159,8 @@ for i in range(0,itr):
                 x1=x+d*Ux
                 y1=y+d*Uy
                 path+=d
+                w=w*math.exp(-beta*d)
+                absorbed_path+=w*d
                 if abs(x1)>Lx/2 or abs(y1)>Ly/2:
                     sys=False
                     break
@@ -203,6 +214,8 @@ for i in range(0,itr):
                 path+=d
                 x1=x+d*Ux
                 y1=y+d*Uy
+                w=w*math.exp(-beta*d)
+                absorbed_path+=w*d
                 if abs(x1)>Lx/2 or abs(y1)>Ly/2:
                     sys=False
                     mass+=w
@@ -233,6 +246,7 @@ for i in range(0,itr):
 print("I/Io at the detector=", photon/itr)   
 print("Thru=", thru/itr)
 print("hits=", hit/itr)
+print("absorbed_path= ", absorbed_path/itr);
 
 
 # =============================================================================
