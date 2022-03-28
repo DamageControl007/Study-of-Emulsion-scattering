@@ -20,32 +20,38 @@ from datetime import datetime
 import datetime
 from solarpy import irradiance_on_plane
 from datetime import datetime
+import threading
 
 
 START=datetime.now()
 nm=10                                                                          #Number of hours in a day
+ps=[]
 
+aaaa=1
 
-
-def func1(var1):
-    ps=[]
-    for k in range (0, var1):
-        ps.append(func2())
-    func3(ps)
+def func1(var1, Ut_K, Us_K, g):
+    global ps
+    Ut=Ut_K
+    Us=Ut*Us_K
+    for i in range(var1):
+        ps.append(func2(Ut, Us, g))
+        Ut+=Ut_K
+        Us=Ut*Us_K
+    
+    
 
 def func3(lst):
     for i in range(0, len(lst)):
         print(lst[i])
 
-def func2():
-    itr=int(1e6)                                                                 #number of iterations
-    print(itr)
-
+def func2(Ut, Us, g):
+    itr=int(1e6)                                                                 #number of iterationsg
+    global aaaa
+    print(aaaa)
+    aaaa+=1
     # Monte carlo paramters
-    Ut=0.2
-    Us=Ut*1
     Ua=Ut-Us
-    g=0.81
+
 
     # System boundaries
     Lx=1
@@ -77,9 +83,8 @@ def func2():
 
 
     for i in range(0,itr):
-        if i%100000==0:
-            print(i*100/itr,"%")
-            
+        #if i%100000==0:
+            #print(i*100/itr,"%")      
                                                                                     # Initializing direction cosines    
         Ux=0
         Uy=0
@@ -220,7 +225,29 @@ def func2():
     return path/itr
 
 
-func1(nm)
+
+if __name__ == "__main__":
+# =============================================================================
+#     t1=threading.Thread(target=func1, args=(0.1, 0,0.9))
+#     t2=threading.Thread(target=func1, args=(0.1, 0, 0.9))
+#     t3=threading.Thread(target=func1, args=(0.1, 0, 0.9))
+#     t1.start()
+#     t2.start()
+#     t3.start()
+#     
+#     t1.join()
+#     t2.join()
+#     t3.join()
+# =============================================================================]
+    Ut=1E-5
+    for i in range(0,6):
+        func1(10,Ut,0,0.9)
+        Ut=Ut*10
+    
+    func3(ps)
+    
+    print("done")
+
   
 # =============================================================================
 # print("L/L0", path/itr)   
