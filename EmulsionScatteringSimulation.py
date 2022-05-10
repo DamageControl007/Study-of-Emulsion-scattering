@@ -27,44 +27,55 @@ START=datetime.now()
 nm=10                                                                          #Number of hours in a day
 ps=[]
 
+
 aaaa=1
 
-def func1(var1, Ut_K, Us_K, g):
-    global ps
+def func1(var1, Ut_K, Ua_K, g):
+    global ps, file_path
     Ut=Ut_K
-    Us=Ut*Us_K
+    Ua=Ut*Ua_K
     for i in range(var1):
-        ps.append(func2(Ut, Us, g))
+        file_path.write(str(g)+"\t")
+        file_path.write(str(Ut)+"\t")
+        ps.append(func2(Ut, Ua, g))
         Ut+=Ut_K
-        Us=Ut*Us_K
+        Ua=Ut*Ua_K
     
-    
+def Find_Max(a, b):
+    if (a<b):
+        return b
+    return a
 
 def func3(lst):
     for i in range(0, len(lst)):
         print(lst[i])
 
-def func2(Ut, Us, g):
-    itr=int(1e6)                                                                 #number of iterationsg
+def func2(Ut, Ua, g):
+    global filepath                                                                          
+    #Optimization of iterations 
+    if (Ut<1e-4):
+        itr=int(1e7)
+    elif (Ut<1e-3):
+        itr=int(1e6)
+    elif (Ut<1):
+        itr=int(1e6)
+    elif (Ut<10):
+        itr=int(1e4)
+    else:
+        itr=int(1e4)  
     global aaaa
     print(aaaa)
     aaaa+=1
     # Monte carlo paramters
-    Ua=Ut-Us
-
-
+    Us=Ut-Ua
     # System boundaries
-    Lx=1
-    Ly=4.3
+    Lx=1E3
+    Ly=1E3
     Lz=1
-
     # refractive index of particles and medium (water)
     M_re=1.5837
     N_re=1.33
-
-
     IntensityLoss=0.05         # Fraction of intensity loss while exiting the system by a photon
-
     # Observation 
     photon=0
     path=0
@@ -73,14 +84,11 @@ def func2(Ut, Us, g):
     thru=0
     mass=0
     hit=0
-
-    # sensor coordinates
-
-    sensor_z=14.6
-    sensor_x=6
-    sensor_y=0
-    sensor_area=0.025
-
+    largest_s=0
+    max_z_avg=0
+    absorbed=0
+    norm_path=0
+    TIR=0
 
     for i in range(0,itr):
         #if i%100000==0:
@@ -102,13 +110,16 @@ def func2(Ut, Us, g):
         z=s*Uz
         sys=True
         lim=0
-        
+        largest_s=0
+        #largest_s=Find_Max(largest_s, s)
                                                                                     # if photon reaches the other boundary without any interaction
         if z>=Lz:
             path+=Lz
+            norm_path+=Lz*w
             thru+=1
             front+=1
             mass+=w
+            max_z_avg+=Lz
         
                                                                                     # if it reaches the inlet boundary
         elif z<=0:
@@ -164,6 +175,8 @@ def func2(Ut, Us, g):
                     hit+=1
                     w=w*(1-Ua/Ut) 
                     path+=s
+                    norm_path+=s*w
+                    largest_s=Find_Max(largest_s, z)
                     break
                 elif z1>Lz:
                     d=abs((Lz-z)/Uz)
@@ -171,8 +184,11 @@ def func2(Ut, Us, g):
                     x1=x+d*Ux
                     y1=y+d*Uy
                     path+=d
+                    norm_path+=d*w
+                    largest_s=Find_Max(largest_s, z1)
                     if abs(x1)>Lx/2 or abs(y1)>Ly/2:
                         sys=False
+                        max_z_avg+=largest_s
                         break
                     
                     # Checking total internal reflection at z=1
@@ -182,11 +198,13 @@ def func2(Ut, Us, g):
                         s=s-d
                         x=x1
                         y=y1
+                        TIR+=1
                         
                     else:
                         mass+=w
                         front+=1
                         sys=False
+                        max_z_avg+=largest_s
                         break
                         
 
@@ -194,11 +212,15 @@ def func2(Ut, Us, g):
                     d=abs(z/Uz)
                     z=0
                     path+=d
+                    norm_path+=d*w
+                    largest_s=Find_Max(largest_s, z)
+                    
                     x1=x+d*Ux
                     y1=y+d*Uy
                     if abs(x1)>Lx/2 or abs(y1)>Ly/2:
                         sys=False
                         mass+=w
+                        max_z_avg+=largest_s
                         break
                     
                     # checking internal reflection at z=0
@@ -208,10 +230,12 @@ def func2(Ut, Us, g):
                         y=y1
                         s=s-d
                         Uz=-Uz
+                        TIR+=1
                     else:
                         z=z1
                         sys=False
                         back+=1
+                        max_z_avg+=largest_s
                         break
 
             #russian roulette
@@ -221,7 +245,20 @@ def func2(Ut, Us, g):
                   if e<=1/m:
                       w=w*m
                   else:
-                      w=0        
+                      absorbed+=1
+                      w=0    
+    file_path.write(str(path/itr)+"\t")
+    file_path.write(str(norm_path/itr)+"\t")
+    file_path.write(str(hit/itr)+"\t")
+    file_path.write(str(back/itr)+"\t")
+    file_path.write(str(front/itr)+"\t")
+    file_path.write(str(thru/itr)+"\t")
+    file_path.write(str(mass/itr)+"\t")
+    file_path.write(str(absorbed/itr) +"\t")
+    file_path.write(str(TIR/itr)+"\t")
+    file_path.write(str(max_z_avg/itr) + "\t")
+    
+    file_path.write(str("{:e}".format(itr))+"\n")
     return path/itr
 
 
@@ -240,11 +277,32 @@ if __name__ == "__main__":
 #     t3.join()
 # =============================================================================]
     Ut=1E-5
-    for i in range(0,6):
-        func1(10,Ut,0,0.9)
+    absorption=0.1
+    g=0.8
+    text="DataFile_g0"+str(int(g*10))+"_abs"+str(int(absorption*10))+".txt"
+
+    print(text)
+    file_path = open(text,"a")
+    file_path.write("Anisotropy" +"\t")
+    file_path.write("Interaction coefficient"+"\t")
+    file_path.write("L/L0"+"\t")
+    file_path.write("Weight norm L/L0" +"\t")
+    file_path.write("Collisions"+"\t")
+    file_path.write("Backscattered"+"\t")
+    file_path.write("Front"+"\t")
+    file_path.write("Undeflected" +"\t")
+    file_path.write("Mass"+"\t")
+    file_path.write("Photons absorbed"+"\t")
+    file_path.write("TIR"+"\t")
+    file_path.write("Avg max z coordinate"+"\t")
+    file_path.write("Iterations"+"\n")
+    for i in range(0,7):
+        func1(10,Ut,absorption,g)
+        print(i)
         Ut=Ut*10
     
-    func3(ps)
+    #func3(ps)
+    file_path.close()
     
     print("done")
 
