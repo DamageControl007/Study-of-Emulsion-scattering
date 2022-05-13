@@ -11,6 +11,8 @@ for i in range(0, len(list1)):
     data[0].append(list1[i])
     data[0].append(list2[i])
     data[0].append(list3[i])
+data[0].append(-1)
+print(type(data[0]))
 data.append([0,0,0])
 for i in range(0, 2):
     data[1].append(list1[i])
