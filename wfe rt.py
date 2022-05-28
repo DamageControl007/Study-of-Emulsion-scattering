@@ -51,12 +51,12 @@ xcor=[]
 zcor=[]
 
 dv=100
-bta=8.58
+bta=10
 
 #0.001,0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.009,0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100
 #-1,-0.5,-0.1,0.1,0.5,0.9,0.99,1
 
-urange = arr.array('d',[100])
+urange = arr.array('d',[10])
 
 for g in [0.9] :
     if g<xxx : continue
@@ -553,22 +553,22 @@ for g in [0.9] :
         file_path.write(str(hit/itr)+"\n")
         file_path.close()"""
         
-        #file_path = open("wfe rt.txt","a")
+        file_path = open("temp.txt","a")
         xval=[]
         yval=[]
         # del dic[1]
         # del dic[0]
-        #file_path.write("\ng="+str(g)+"\t")
-        #file_path.write("Ut="+str(Ut)+"\n\n")
+        file_path.write("\ng="+str(g)+"\t")
+        file_path.write("Ut="+str(Ut)+"\n\n")
         totalWeightAbsorbed=0
         for key in dic:
             totalWeightAbsorbed+=dic[key]
             dic[key] = dic[key]/itr
             xval.append(key)
-            #file_path.write(str(key)+"\t")
+            file_path.write(str(key)+"\t")
             yval.append(dic[key])
-            #file_path.write(str(dic[key])+"\n")
-        #file_path.close()
+            file_path.write(str(dic[key])+"\n")
+        file_path.close()
         print(totalWeightAbsorbed/itr)
 #file_path.close()
 #print(dic)
