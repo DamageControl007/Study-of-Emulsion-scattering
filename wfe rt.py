@@ -4,7 +4,6 @@ import array as arr
 import matplotlib.pyplot as plt
 import miepython as mp
 import csv
-import xlrd
 import xlsxwriter
 import sys
 from datetime import date
@@ -23,7 +22,7 @@ print("START")
 
 
 nm=10                                                                          #Number of hours in a day
-itr=100000                                                                   #number of iterations
+itr=int(1E6)                                                                   #number of iterations
 
 # System boundaries
 Lx=pow(10,7)
@@ -51,14 +50,16 @@ xcor=[]
 zcor=[]
 
 dv=100
-bta=10
+bta=1
+Ut_coeff=0.1
+g_coeff=0.9
 
 #0.001,0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.009,0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100
 #-1,-0.5,-0.1,0.1,0.5,0.9,0.99,1
 
-urange = arr.array('d',[10])
+urange = arr.array('d',[Ut_coeff])
 
-for g in [0.9] :
+for g in [g_coeff] :
     if g<xxx : continue
     for Ut in urange :
         if g==xxx and Ut<yyy : continue
@@ -81,8 +82,8 @@ for g in [0.9] :
             Us=Ut
             Ua=Ut-Us
 
-            if i%1000==0:
-                print(i*100/itr,"%\tfor g = ",g,"\tfor Ut = ",Ut)
+            if i%10000==0:
+                print(i*100/itr,"%\tfor g = ",g,"\tfor Ut = ",Ut, "\tfor Ua = ", bta)
 
             # Initializing direction cosines
             Ux=0
@@ -553,7 +554,7 @@ for g in [0.9] :
         file_path.write(str(hit/itr)+"\n")
         file_path.close()"""
         
-        file_path = open("temp.txt","a")
+        file_path = open("Ut"+str(Ut)+"g:" + str(g) +"Ua: " + str(bta),"a")
         xval=[]
         yval=[]
         # del dic[1]
@@ -577,8 +578,8 @@ for g in [0.9] :
 #print(yval)
 
 plt.plot(xval,yval)
-plt.title("Absorption by Cyclohexanone, Ut*L: " + str(Ut))
-plt.ylabel("Absorption")
+plt.title("1-D grid, Ut: " + str(Ut) + " g: " + str(g)+" Ua: " + str(bta))
+plt.ylabel("Fraction of photon weight absorbed")
 plt.xlabel("Z-coordinate")
 plt.legend()
 
