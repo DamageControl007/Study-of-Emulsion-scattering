@@ -11,7 +11,6 @@ import random
 import matplotlib.pyplot as plt
 import miepython as mp
 import csv
-import xlrd
 import xlsxwriter
 import sys
 from datetime import date
@@ -51,7 +50,7 @@ def func3(lst):
         print(lst[i])
 
 def func2(Ut, Ua, g):
-    global filepath                                                                          
+    global filepath, bta                                                                        
     #Optimization of iterations 
     if (Ut<1e-4):
         itr=int(1e7)
@@ -59,10 +58,10 @@ def func2(Ut, Ua, g):
         itr=int(1e6)
     elif (Ut<1):
         itr=int(1e6)
-    elif (Ut<10):
-        itr=int(1e4)
+    elif (Ut<11):
+        itr=int(1e6)
     else:
-        itr=int(1e4)  
+        itr=int(1e5)  
     global aaaa
     print(aaaa)
     aaaa+=1
@@ -79,6 +78,7 @@ def func2(Ut, Ua, g):
     # Observation 
     photon=0
     path=0
+    prev=0
     front=0
     back=0
     thru=0
@@ -89,7 +89,6 @@ def func2(Ut, Ua, g):
     absorbed=0
     norm_path=0
     TIR=0
-
     for i in range(0,itr):
         #if i%100000==0:
             #print(i*100/itr,"%")      
@@ -98,11 +97,13 @@ def func2(Ut, Ua, g):
         Uy=0
         Uz=1
         w=1                                                                         # photon weight
-        
-                                                                                    # initializing coordinates
+                                                                                 # initializing coordinates
         x=0
         y=0
         z=0
+        x_list=[]
+        y_list=[]
+        z_list=[]
         e=random.uniform(0,1)
         s=-np.log(e)/Ut                                                             # Photon step size
         x=s*Ux
@@ -128,6 +129,7 @@ def func2(Ut, Ua, g):
         
                                                                                     # if it undergoes scattering
         else:
+            path+=s
             hit+=1
             
                                                                                     # While a photon is inside the system boundaries
@@ -142,8 +144,11 @@ def func2(Ut, Ua, g):
     #                     break
     # =============================================================================
             e=random.uniform(0,1)
-            cos=(1/(2*g))*(1 + g**2 - ((1-g**2)/(1+g*(2*e - 1)))**2)
-            theta=np.arccos(cos)
+            if (abs(g)<0.001):
+                theta = np.pi*random.uniform(0,1)
+            else:
+                cos=(1/(2*g))*(1 + g**2 - ((1-g**2)/(1+g*(2*e - 1)))**2)
+                theta=np.arccos(cos)
             sin_theta=np.sin(theta)
             cos_theta=np.cos(theta)
             sin_phi=np.sin(phi)
@@ -172,27 +177,37 @@ def func2(Ut, Ua, g):
                     x=x1
                     y=y1
                     z=z1
+                    x_list.append(x)
+                    y_list.append(y)
+                    z_list.append(z)
                     hit+=1
-                    w=w*(1-Ua/Ut) 
+                    #w=w*(1-Ua/Ut) 
+                    w=w*np.exp(-bta*s)
                     path+=s
                     norm_path+=s*w
                     largest_s=Find_Max(largest_s, z)
                     break
                 elif z1>Lz:
                     d=abs((Lz-z)/Uz)
+                    w=w*np.exp(-bta*d)
                     z1=Lz
                     x1=x+d*Ux
                     y1=y+d*Uy
+                    x_list.append(x1)
+                    y_list.append(y1)
+                    z_list.append(z1)
                     path+=d
                     norm_path+=d*w
                     largest_s=Find_Max(largest_s, z1)
                     if abs(x1)>Lx/2 or abs(y1)>Ly/2:
+                        
                         sys=False
                         max_z_avg+=largest_s
                         break
                     
                     # Checking total internal reflection at z=1
-                    if N_re*np.sqrt(1-Uz**2)>1:
+                    if N_re*np.sqrt(1-Uz**2)<0:   #Not including TIR
+                        
                         z=Lz
                         Uz=-Uz
                         s=s-d
@@ -210,6 +225,7 @@ def func2(Ut, Ua, g):
 
                 else:
                     d=abs(z/Uz)
+                    w=w*np.exp(-bta*d)
                     z=0
                     path+=d
                     norm_path+=d*w
@@ -217,14 +233,19 @@ def func2(Ut, Ua, g):
                     
                     x1=x+d*Ux
                     y1=y+d*Uy
+                    x_list.append(x1)
+                    y_list.append(y1)
+                    z_list.append(z)
                     if abs(x1)>Lx/2 or abs(y1)>Ly/2:
+                        
                         sys=False
                         mass+=w
                         max_z_avg+=largest_s
                         break
                     
                     # checking internal reflection at z=0
-                    if N_re*np.sin(np.arccos(Uz))>1:
+                    if N_re*np.sin(np.arccos(Uz))<0:   #Not including TIR
+                        
                         z=0
                         x=x1
                         y=y1
@@ -276,10 +297,11 @@ if __name__ == "__main__":
 #     t2.join()
 #     t3.join()
 # =============================================================================]
-    Ut=1E-5
+    Ut=1
     absorption=0.1
-    g=0.8
-    text="DataFile_g0"+str(int(g*10))+"_abs"+str(int(absorption*10))+".txt"
+    g=0.9
+    bta=0
+    text="FinalData_g"+str(int(g*10))+"_Ua:_"+str(bta)+".txt"
 
     print(text)
     file_path = open(text,"a")
@@ -296,8 +318,8 @@ if __name__ == "__main__":
     file_path.write("TIR"+"\t")
     file_path.write("Avg max z coordinate"+"\t")
     file_path.write("Iterations"+"\n")
-    for i in range(0,7):
-        func1(10,Ut,absorption,g)
+    for i in range(0,1):
+        func1(50,Ut,absorption,g)
         print(i)
         Ut=Ut*10
     
