@@ -23,7 +23,7 @@ print("START")
 
 
 nm=10                                                                          #Number of hours in a day
-itr=10                                                                   #number of iterations
+itr=int(1E6)                                                                   #number of iterations
 
 # System boundaries
 Lx=pow(10,7)
@@ -51,14 +51,15 @@ xcor=[]
 zcor=[]
 
 dv=100
-bta=10
+bta=0.1
 
 #0.001,0.002,0.003,0.004,0.005,0.006,0.007,0.008,0.009,0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100
 #-1,-0.5,-0.1,0.1,0.5,0.9,0.99,1
+interaction_coefficient=0.0000000001
+urange = arr.array('d',[interaction_coefficient])
+anisotropy_fac=0.9
 
-urange = arr.array('d',[10])
-
-for g in [0.9] :
+for g in [anisotropy_fac] :
     if g<xxx : continue
     for Ut in urange :
         if g==xxx and Ut<yyy : continue
@@ -81,7 +82,7 @@ for g in [0.9] :
             Us=Ut
             Ua=Ut-Us
 
-            if i%1000==0:
+            if i%(itr/10)==0:
                 print(i*100/itr,"%\tfor g = ",g,"\tfor Ut = ",Ut)
 
             # Initializing direction cosines
@@ -553,7 +554,7 @@ for g in [0.9] :
         file_path.write(str(hit/itr)+"\n")
         file_path.close()"""
         
-        file_path = open("Fulltemp.txt","a")
+        file_path = open("Distribution_g"+str(int(g*10)) + "_Ut_" + str(int(Ut))+".txt","a")
         xval=[]
         yval=[]
         # del dic[1]
