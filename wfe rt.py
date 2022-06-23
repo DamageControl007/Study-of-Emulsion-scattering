@@ -23,7 +23,7 @@ print("START")
 
 
 nm=10                                                                          #Number of hours in a day
-itr=100000                                                                   #number of iterations
+itr=10                                                                   #number of iterations
 
 # System boundaries
 Lx=pow(10,7)
@@ -553,7 +553,7 @@ for g in [0.9] :
         file_path.write(str(hit/itr)+"\n")
         file_path.close()"""
         
-        file_path = open("temp.txt","a")
+        file_path = open("Fulltemp.txt","a")
         xval=[]
         yval=[]
         # del dic[1]
